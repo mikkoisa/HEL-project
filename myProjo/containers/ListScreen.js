@@ -1,12 +1,16 @@
 import React from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, Button, Dimensions} from 'react-native'
+import SlidingUpPanel from 'rn-sliding-up-panel';
+
+const {height} = Dimensions.get('window')
 
 class ListScreen extends React.Component{
+  
 
 render() {
     return (
       <View style={styles.container}>
-        <Text>List comes here</Text>
+
       </View>
     );
   }
@@ -15,8 +19,9 @@ render() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#f7f7f7'
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })
 

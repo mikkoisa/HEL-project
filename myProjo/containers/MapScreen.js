@@ -15,8 +15,8 @@ class MapScreen extends React.Component{
         coords: {
             latitude: 60.1665342,
             longitude: 24.9350733,
-            latitudeDelta: 0.5,
-            longitudeDelta: 0.5,
+            latitudeDelta: 0.2,
+            longitudeDelta: 0.2,
             altitude: null,
             accuracy: null,
             altitudeAccuracy: null,
