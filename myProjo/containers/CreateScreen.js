@@ -11,4 +11,4 @@ render() {
     }
 }
 
-export default ListScreen
+export default CreateScreen
