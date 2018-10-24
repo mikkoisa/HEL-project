@@ -3,6 +3,8 @@ import Map from '../components/Map'
 import MapView from 'react-native-maps';
 import { Marker } from 'react-native-maps';
 import { Text, View, StyleSheet } from 'react-native'
+import fetchGetJSON from '../util/FetchGetJSON'
+import { baseEventApiUrl } from '../constants/config'
 
 class MapScreen extends React.Component{
 
@@ -24,14 +26,35 @@ class MapScreen extends React.Component{
             speed: null,
         },
         timestamp: null,
-    }, 
-
+      },
+      events: null,
       error: null
     };
   }
 
   componentDidMount() {
     this.getInitialLocation();
+    this.getEventList()
+  }
+
+  getEventList = () => {
+    console.log(baseEventApiUrl)
+    
+    fetchGetJSON(`${baseEventApiUrl}/event/?start=today&end=today&division=haaga`)
+      .then((result) => {
+        console.log('It should come here');
+        const events = result
+        // result.results
+        console.log(events.data[1].location)
+        this.setState({
+          events,
+        })
+
+      })
+      .catch(() => {
+        console.log('Went to catch')
+      }) 
+    
   }
 
   getInitialLocation = () => {
@@ -52,10 +75,11 @@ class MapScreen extends React.Component{
   }
 
   render() {
-    const { position } = this.state
+    const { position, events} = this.state
     return (
       <Map
         position={position}
+        events = {events}
       />
     );
   }
