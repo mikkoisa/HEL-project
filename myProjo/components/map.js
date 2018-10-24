@@ -75,7 +75,6 @@ class Map extends React.Component {
                         </View>
                     </View>
                 </Modal>
-                <Button title='Show panel' onPress={() => this.setState({visible: true})} />
             </View>
         )
     }
