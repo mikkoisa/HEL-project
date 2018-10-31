@@ -32,7 +32,7 @@ class MapScreen extends React.Component {
     // this.followLocation()
     this.getEventList()
   }
-
+  
   getEventList = () => {
     console.log(baseEventApiUrl)
     
