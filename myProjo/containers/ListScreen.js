@@ -1,28 +1,15 @@
 import React from 'react'
-import { Text, View, StyleSheet, Button, Dimensions} from 'react-native'
-import SlidingUpPanel from 'rn-sliding-up-panel';
+import { View, StyleSheet } from 'react-native'
 
-const {height} = Dimensions.get('window')
-
-class ListScreen extends React.Component{
-  
-
-render() {
-    return (
-      <View style={styles.container}>
-
-      </View>
-    );
-  }
-}
+const ListScreen = () => <View style={styles.container} />
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
     alignItems: 'center',
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 })
 
-  export default ListScreen
+export default ListScreen

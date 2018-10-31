@@ -1,14 +1,6 @@
 import React from 'react'
+import CreateEvent from '../components/CreateEvent'
 
-class CreateScreen extends React.Component{
-
-render() {
-    return (
-        <View style={styles.container}>
-
-        </View>
-    );
-    }
-}
+const CreateScreen = () => <CreateEvent />
 
 export default CreateScreen
