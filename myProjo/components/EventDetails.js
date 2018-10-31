@@ -13,7 +13,6 @@ class EventDetails extends React.Component {
 
   render() {
     const { /* modalVisible, */ event } = this.props
-    console.log(event)
     return (
       <View style={styles.modal}>
         <ScrollView>

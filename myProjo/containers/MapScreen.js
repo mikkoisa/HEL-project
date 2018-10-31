@@ -77,7 +77,6 @@ class MapScreen extends React.Component {
   }
 
   render() {
-    console.log('rendering')
     const { position, events } = this.state
     return (
       <Map
