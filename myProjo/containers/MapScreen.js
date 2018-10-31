@@ -1,5 +1,7 @@
 import React from 'react'
 import Map from '../components/Map'
+import fetchGetJSON from '../util/FetchGetJSON'
+import { baseEventApiUrl } from '../constants/config'
 
 class MapScreen extends React.Component {
   constructor(props) {
@@ -20,13 +22,33 @@ class MapScreen extends React.Component {
           speed: null,
         },
         timestamp: null,
-      }, 
+      },
+      events: null,
     };
   }
 
   componentDidMount() {
     this.getInitialLocation()
-  // this.followLocation()
+    // this.followLocation()
+    this.getEventList()
+  }
+
+  getEventList = () => {
+    console.log(baseEventApiUrl)
+    
+    fetchGetJSON(`${baseEventApiUrl}/event/?start=today&end=today&division=haaga`)
+      .then((result) => {
+        console.log('It should come here');
+        const events = result
+        // result.results
+        console.log(events.data[1].location)
+        this.setState({
+          events,
+        })
+      })
+      .catch(() => {
+        console.log('Went to catch')
+      })   
   }
 
   getInitialLocation = () => {
@@ -56,10 +78,11 @@ class MapScreen extends React.Component {
 
   render() {
     console.log('rendering')
-    const { position } = this.state
+    const { position, events } = this.state
     return (
       <Map
         position={position}
+        events={events}
       />
     );
   }
