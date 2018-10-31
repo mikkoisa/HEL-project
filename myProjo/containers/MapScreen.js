@@ -1,11 +1,7 @@
 import React from 'react'
 import Map from '../components/Map'
-import MapView from 'react-native-maps';
-import { Marker } from 'react-native-maps';
-import { Text, View, StyleSheet } from 'react-native'
 
-class MapScreen extends React.Component{
-
+class MapScreen extends React.Component {
   constructor(props) {
     super(props);
 
@@ -13,45 +9,53 @@ class MapScreen extends React.Component{
       // Set default position
       position: {
         coords: {
-            latitude: 60.1665342,
-            longitude: 24.9350733,
-            latitudeDelta: 0.2,
-            longitudeDelta: 0.2,
-            altitude: null,
-            accuracy: null,
-            altitudeAccuracy: null,
-            heading: null,
-            speed: null,
+          latitude: 60.1665342,
+          longitude: 24.9350733,
+          latitudeDelta: 0.02,
+          longitudeDelta: 0.02,
+          altitude: null,
+          accuracy: null,
+          altitudeAccuracy: null,
+          heading: null,
+          speed: null,
         },
         timestamp: null,
-    }, 
-
-      error: null
+      }, 
     };
   }
 
   componentDidMount() {
-    this.getInitialLocation();
+    this.getInitialLocation()
+  // this.followLocation()
   }
 
   getInitialLocation = () => {
     // Get the coordinates and set them to states
     navigator.geolocation.getCurrentPosition(
-      (position) =>{
+      (position) => {
         position.coords.latitudeDelta = 0.02,
         position.coords.longitudeDelta = 0.02,
-        console.log(position)
-        this.setState({
-          position: position,
-          error: null,
-        })
+        this.updatePosition(position)
       },
-      // If error, set the error state
-      (error) => this.setState({ error: error.message }),
+    )
+  }
+
+  updatePosition = (position) => {
+    this.setState({
+      position,
+    })
+  }
+
+  followLocation = () => {
+    navigator.geolocation.watchPosition(
+      (position) => {
+        console.log(position.coords)
+      },
     )
   }
 
   render() {
+    console.log('rendering')
     const { position } = this.state
     return (
       <Map
@@ -61,4 +65,4 @@ class MapScreen extends React.Component{
   }
 }
 
-  export default MapScreen
+export default MapScreen
