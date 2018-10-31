@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MapView from 'react-native-maps';
 import { Marker, Callout, Overl } from 'react-native-maps';
+// import PropTypes from 'prop-types';
 import SlidingUpPanel from 'rn-sliding-up-panel';
 import { CoordinatorLayout, BottomSheetBehavior, FloatingActionButton } from 'react-native-bottom-sheet-behavior'
 
@@ -12,16 +13,13 @@ import soccerBall from '../assets/soccerBall.png'
 class Map extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             modalVisible: false,
             visible: false,
             height: 100,
 
             // List of events here, this is a test list
-            events: [
-                {latlng: {latitude: 60.1695291, longitude: 24.9383613}, title: 'Football in the city', description: 'Come and play football in the middle of the city!'}
-            ]
+           
         }
     }
 
@@ -30,19 +28,24 @@ class Map extends React.Component {
     }
 
     render() {
-        const { position } = this.props
+        const { position, events } = this.props
+        if (events != null) {
+            console.log(events)
+        }
+        
+        // const temploc = {latlng: {latitude: 60.1695291, longitude: 24.9383613}}
         return(
             <View
             style={ styles.container }>
                 <MapView
                     style={ styles.container }
                     region={position.coords}>
-                    {this.state.events.map((event, i) => ( // This will iterate trhrough the events and display them as markers
+                    {events.map((event, i) => ( // This will iterate trhrough the events and display them as markers
                         <Marker
                             key={i}
-                            coordinate={event.latlng}
-                            title={event.title}
-                            description={event.description}
+                            coordinate={temploc}
+                            title={event.name.fi}
+                            description={event.short_description}
                             image={soccerBall}
                             onCalloutPress={() => {
                                 this.setModalVisible(true);
@@ -79,6 +82,17 @@ class Map extends React.Component {
         )
     }
 }
+Map.propTypes = {
+
+}
+
+Map.defaultProps = {
+    events: [
+        {latlng: {latitude: 60.1695291, longitude: 24.9383613}, title: 'Football in the city', description: 'Come and play football in the middle of the city!'}
+    ]
+}
+
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,

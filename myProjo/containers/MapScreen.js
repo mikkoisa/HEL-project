@@ -27,14 +27,14 @@ class MapScreen extends React.Component{
         },
         timestamp: null,
       },
-      events: null,
+      events: 0,
       error: null
     };
   }
 
   componentDidMount() {
+    this.getEventList();
     this.getInitialLocation();
-    this.getEventList()
   }
 
   getEventList = () => {
@@ -42,13 +42,14 @@ class MapScreen extends React.Component{
     
     fetchGetJSON(`${baseEventApiUrl}/event/?start=today&end=today&division=haaga`)
       .then((result) => {
-        console.log('It should come here');
-        const events = result
-        // result.results
-        console.log(events.data[1].location)
+        // Results come here and data contains first 20-25 event
+        // it there is 'next' which is needed if more events are needed
+        const list = result.data
+        console.log('list of data ' + list);
         this.setState({
-          events,
+          events: list,
         })
+        console.log(events);
 
       })
       .catch(() => {
