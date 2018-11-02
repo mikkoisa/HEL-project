@@ -7,7 +7,7 @@ class MapScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+    this.state = {  
       // Set default position
       position: {
         coords: {
@@ -77,6 +77,7 @@ class MapScreen extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     const { position, events } = this.state
     return (
       <Map

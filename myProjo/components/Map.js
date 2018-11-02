@@ -1,10 +1,11 @@
 import React from 'react'
 import MapView, { Marker } from 'react-native-maps';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, StatusBar } from 'react-native';
 import Modal from 'react-native-modal'
 import EventDetails from './EventDetails'
 import userMarker from '../assets/userMarker.png'
 import soccerBall from '../assets/soccerBall.png'
+
 
 class Map extends React.Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class Map extends React.Component {
   }
 
   setModalVisible(visible, clickedEvent) {
+    StatusBar.setHidden(true);
     this.setState({ clickedEvent })
     this.setState({ modalVisible: visible });
   }
@@ -31,6 +33,7 @@ class Map extends React.Component {
     const { modalVisible, clickedEvent, events } = this.state
     return (
       <View style={styles.container}>
+        <StatusBar hidden />
         <MapView
           style={styles.container}
           region={position.coords}
@@ -54,7 +57,7 @@ class Map extends React.Component {
           />
               
         </MapView>
-        <Modal
+        <Modal // Modal containing the details of the event
           animationType='slide'
           // transparent
           backdropOpacity={0.70}

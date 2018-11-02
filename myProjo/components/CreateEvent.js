@@ -70,7 +70,6 @@ class CreateScreen extends React.Component {
                   },
                 )}
               >
-
                 <Marker
                   coordinate={marker}
                 />
