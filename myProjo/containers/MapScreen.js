@@ -50,21 +50,35 @@ class MapScreen extends React.Component {
   }
 
   getEventCoordinates = (list) => {
+    // Gets location id from object and puts it to new array.
     const locationList = list.map(item => item.location['@id']);
-    // console.log(locationUrls);
-    const fullList = this.getLocations(locationList)
-    fullList.then((values) => {
-      console.log(values)
-    })
+    // gets promises from fetches and then gets array that contains all place information
+    this.getLocations(locationList)
+      .then((values) => {
+        console.log(values)
+        this.combineEventInfo(list, values)
+      })
     // console.log(fullList)
   }
 
   getLocations = (locationList) => {
+    // Multiple fetches and after fetching it continues
     const locationResult = []
     for (let i = 0; i < locationList.length; i += 1) {
       locationResult.push(fetchGetJSON(locationList[i]))
     }
     return Promise.all(locationResult)
+  }
+
+  combineEventInfo = (list, values) => {
+    let combinedList = []
+    for (let i = 0; i < list.length; i += 1) {
+      combinedList.push({ ...list, ...values })
+    }
+    console.log(combinedList)
+    this.setState({
+      events: combinedList,
+    })
   }
 
   getInitialLocation = () => {
