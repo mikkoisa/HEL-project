@@ -34,14 +34,14 @@ class MapScreen extends React.Component {
   }
 
   getEventList = () => {
-    console.log(baseEventApiUrl)
+    // console.log(baseEventApiUrl)
     
     fetchGetJSON(`${baseEventApiUrl}/event/?start=today&end=today&division=haaga`)
       .then((result) => {
-        console.log('It should come here');
+        // console.log('It should come here');
         const events = result
         // result.results
-        console.log(events.data[1].location)
+        // console.log(events.data[1].location)
         this.setState({
           events,
         })
@@ -77,7 +77,7 @@ class MapScreen extends React.Component {
   }
 
   render() {
-    console.log(this.props)
+    // console.log(this.props)
     const { position, events } = this.state
     return (
       <Map

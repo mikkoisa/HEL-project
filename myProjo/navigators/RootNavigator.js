@@ -1,10 +1,27 @@
 import React from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { createStackNavigator } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 
 import MapScreen from '../containers/MapScreen';
 import ListScreen from '../containers/ListScreen';
 import CreateScreen from '../containers/CreateScreen';
+import EventDetails from '../components/EventDetails';
+
+const ListStack = createStackNavigator({
+  List: {
+    screen: ListScreen,
+    navigationOptions: {
+      header: null,
+    },
+  },
+  Event: {
+    screen: EventDetails,
+    navigationOptions: {
+      header: null,
+    },
+  },
+});
 
 const RootNavigator = createMaterialBottomTabNavigator({
   Map: {
@@ -21,7 +38,7 @@ const RootNavigator = createMaterialBottomTabNavigator({
   },
 
   List: {
-    screen: ListScreen,
+    screen: ListStack,
     navigationOptions: () => ({
       tabBarIcon: ({ tintColor }) => (
         <Icon
@@ -51,9 +68,9 @@ const RootNavigator = createMaterialBottomTabNavigator({
     showIcon: true, 
   }, 
   initialRouteName: 'Map',
-  activeColor: '#f0edf6',
-  inactiveColor: '#3e2465',
-  barStyle: { backgroundColor: '#3f51b5' },
+  activeColor: '#f57c00',
+  inactiveColor: '#000000',
+  barStyle: { backgroundColor: '#FFFFFF' },
 })
 
 export default RootNavigator

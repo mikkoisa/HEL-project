@@ -3,16 +3,10 @@ import PropTypes from 'prop-types'
 import { Text, View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 
 class EventDetails extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      // modalVisible: false,
-    }
-  }
-
   render() {
-    const { /* modalVisible, */ event } = this.props
+    const { event } = this.props
+    // console.log(event)
+
     return (
       <View style={styles.modal}>
         <ScrollView>
@@ -49,7 +43,7 @@ EventDetails.Proptpes = {
 
 EventDetails.defaultProps = {
   modalVisible: false,
-  event: 'Event',
+  event: { title: 'Event' },
 }
 
 const styles = StyleSheet.create({
@@ -58,12 +52,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     justifyContent: 'center',
-    borderRadius: 4,
+    borderRadius: 10,
     borderColor: '#C0C0C0',
     borderWidth: 2,
-    marginHorizontal: 20,
-    marginVertical: 50,
-    paddingHorizontal: 20,
+    marginHorizontal: 0,
+    marginVertical: 0,
+    padding: 20,
+    elevation: 1,
   },
   textfield: {
     margin: 5,
@@ -72,6 +67,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
+    textAlign: 'center', 
+    color: '#f57c00',
   },
   buttonText: {
     textAlign: 'center', 
@@ -85,7 +82,7 @@ const styles = StyleSheet.create({
     width: '40%',
     borderRadius: 5,
     shadowRadius: 5,
-    backgroundColor: '#3f51b5',
+    backgroundColor: '#f57c00',
     // alignItems: 'center',
     justifyContent: 'center',
   },
