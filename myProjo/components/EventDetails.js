@@ -5,14 +5,18 @@ import { Text, View, ScrollView, StyleSheet, TouchableOpacity } from 'react-nati
 class EventDetails extends React.Component {
   render() {
     const { event } = this.props
-    // console.log(event)
 
     return (
       <View style={styles.modal}>
         <ScrollView>
-          <Text style={styles.title}>{event.title}</Text>
-          <Text style={styles.textfield}>{event.shortDescription}</Text>
-          <Text style={styles.textfield}>{event.description}</Text>
+          <Text style={styles.title}>{event.name.fi}</Text>
+          <Text style={styles.textfield}>{event.short_description.fi}</Text>
+          <Text style={styles.textfield}>{event.description.fi}</Text>
+          <Text style={styles.textfield}>
+            {event.locName}
+            {'\n'}
+            {event.locAddress}
+          </Text>
         </ScrollView>
         <View style={styles.bottom}>
           <TouchableOpacity
