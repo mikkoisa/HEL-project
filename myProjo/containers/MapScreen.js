@@ -23,7 +23,9 @@ class MapScreen extends React.Component {
         },
         timestamp: null,
       },
-      events: null,
+      events: [
+        { coordinates: [60.1695291, 24.9383613], name: { fi: 'suomalainen' }, shortDescription: { fi: 'lyhyt kuvaus' }, id: '5' },
+      ],
     };
   }
 
@@ -38,17 +40,51 @@ class MapScreen extends React.Component {
     
     fetchGetJSON(`${baseEventApiUrl}/event/?start=today&end=today&division=haaga`)
       .then((result) => {
-        // console.log('It should come here');
-        const events = result
-        // result.results
-        // console.log(events.data[1].location)
-        this.setState({
-          events,
-        })
+        // Results come here and data contains first 20-25 event
+        // it there is 'next' which is needed if more events are needed
+        const list = result.data
+        // console.log(list.length)
+        this.getEventCoordinates(list);
       })
       .catch(() => {
         console.log('Went to catch')
       })   
+  }
+
+  getEventCoordinates = (list) => {
+    // Gets location id from object and puts it to new array.
+    const locationList = list.map(item => item.location['@id']);
+    // gets promises from fetches and then gets array that contains all place information
+    this.getLocations(locationList)
+      .then((values) => {
+        this.combineEventInfo(list, values)
+      })
+    // console.log(fullList)
+  }
+
+  getLocations = (locationList) => {
+    // Multiple fetches and after fetching it continues
+    const locationResult = []
+    for (let i = 0; i < locationList.length; i += 1) {
+      locationResult.push(fetchGetJSON(locationList[i]))
+    }
+    return Promise.all(locationResult)
+  }
+
+  combineEventInfo = (list, values) => {
+    const combinedList = []
+    for (let i = 0; i < list.length; i += 1) {
+      combinedList.push({ ...list[i], 
+        ...values[i].position, 
+        ...{ locName: values[i].name.fi }, 
+        ...{ locAddress: values[i].street_address.fi,
+        } })
+    }
+    // console.log(combinedList)
+    
+    this.setState({
+      events: combinedList,
+    })
   }
 
   getInitialLocation = () => {
