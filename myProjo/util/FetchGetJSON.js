@@ -1,5 +1,5 @@
 export default (url, customHeaders = {}) => {
-  console.log(`goes to fetch: ${url}`)
+  // console.log(`goes to fetch: ${url}`)
   const defaultHeaders = {
     Method: 'GET',
     Accept: 'application/json',

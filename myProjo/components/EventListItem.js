@@ -1,30 +1,33 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import soccerBall from '../assets/soccerBall.png'
 
 const EventListItem = (props) => {
   const { onHandlePress, item } = props
+  if (!item.images[0]) {
+    item.images = [{ url: 'https://images.pexels.com/photos/39562/the-ball-stadion-football-the-pitch-39562.jpeg?cs=srgb&dl=ball-football-game-39562.jpg&fm=jpg' }]
+  }
+  console.log(item.images)
 
   return (
     <TouchableOpacity 
       style={styles.item}
       onPress={() => {
-        onHandlePress(true, item)
+        onHandlePress('Event', item)
       }}
     >
       <View style={styles.imageContainer}>
         <Image 
           style={styles.image}
-          source={soccerBall}
+          source={{ uri: item.images[0].url }}
         />
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.textTitle}>
-          {item.title}
+        <Text style={styles.textTitle} numberOfLines={1}>
+          {item.name[Object.keys(item.name)[0]]}
         </Text>
-        <Text style={styles.textDescription}>
-          {item.shortDescription}
+        <Text style={styles.textDescription} numberOfLines={3}>
+          {item.short_description[Object.keys(item.short_description)[0]]}
         </Text>
       </View>
       <Icon 
@@ -53,8 +56,8 @@ const styles = StyleSheet.create({
     // justifyContent: 'space-between',
   },
   imageContainer: {
-    padding: 15,
 
+    paddingRight: 15,
   },
   textContainer: {
     // alignItems: 'center',
@@ -67,8 +70,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   image: {
-    width: 50,
-    height: 50,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+    width: 82,
+    height: 82,
+    // resizeMode: 'contain',
+    
   },
   textTitle: {
     color: '#f57c00',

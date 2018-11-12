@@ -64,8 +64,8 @@ class Map extends React.Component {
   render() {
     const { position, events } = this.props
     const { modalVisible, clickedEvent /* initialRegion */ } = this.state
-    // console.log(events)
-    this.constructMarker()
+    console.log(events)
+    // this.constructMarker()
     return (
       <View style={styles.container}>
         <StatusBar hidden />
@@ -84,8 +84,8 @@ class Map extends React.Component {
             // This will iterate trhrough the events and display them as markers
             <Marker
               key={i}
-              coordinate={{ latitude: event.coordinates[1], longitude: event.coordinates[0] }} 
-              title={event.name.fi}
+              coordinate={{ latitude: event.location.position.coordinates[1], longitude: event.location.position.coordinates[0] }} 
+              title={event.name[Object.keys(event.name)[0]]}
               // description={event[Object.keys(event)[0]].shortDescription.fi}
               image={soccerBall}
               onCalloutPress={() => {

@@ -7,6 +7,7 @@ import MapScreen from '../containers/MapScreen';
 import ListScreen from '../containers/ListScreen';
 import CreateScreen from '../containers/CreateScreen';
 import EventDetails from '../components/EventDetails';
+import EventList from '../components/EventList'
 
 const ListStack = createStackNavigator({
   List: {
@@ -15,10 +16,17 @@ const ListStack = createStackNavigator({
       header: null,
     },
   },
+  EventList: {
+    screen: EventList,
+    navigationOptions: {
+      header: null,
+    },
+  },
   Event: {
     screen: EventDetails,
     navigationOptions: {
       header: null,
+      tabBarVisible: false,
     },
   },
 });
