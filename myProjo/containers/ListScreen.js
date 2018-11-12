@@ -14,8 +14,8 @@ class ListScreen extends React.Component {
     this.getEventList()
   }
 
+  // Maybe add this to helper class????????
   handleNavigation = (routeName, event) => {
-    console.log(event)
     const { navigation } = this.props
     navigation.navigate(routeName, event)
   }

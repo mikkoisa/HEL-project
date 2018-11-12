@@ -26,14 +26,28 @@ const ListStack = createStackNavigator({
     screen: EventDetails,
     navigationOptions: {
       header: null,
-      tabBarVisible: false,
     },
   },
-});
+})
+
+const MapStack = createStackNavigator({
+  Map: {
+    screen: MapScreen,
+    navigationOptions: {
+      header: null,
+    },
+  },
+  Event: {
+    screen: EventDetails,
+    navigationOptions: {
+      header: null,
+    },
+  },
+})
 
 const RootNavigator = createMaterialBottomTabNavigator({
   Map: {
-    screen: MapScreen,
+    screen: MapStack,
     navigationOptions: () => ({
       tabBarIcon: ({ tintColor }) => (
         <Icon

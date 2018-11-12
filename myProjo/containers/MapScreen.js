@@ -36,6 +36,11 @@ class MapScreen extends React.Component {
     this.getEventList()
   }
 
+  handleNavigation = (routeName, event) => {
+    const { navigation } = this.props
+    navigation.navigate(routeName, event)
+  }
+
   getEventList = () => {
     FetchHelper()
       .then((result) => {
@@ -136,6 +141,7 @@ class MapScreen extends React.Component {
     const { position, events } = this.state
     return (
       <Map
+        handleNavigation={this.handleNavigation}
         position={position}
         events={events}
       />

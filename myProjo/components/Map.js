@@ -62,7 +62,7 @@ class Map extends React.Component {
   } 
 
   render() {
-    const { position, events } = this.props
+    const { position, events, handleNavigation } = this.props
     const { modalVisible, clickedEvent /* initialRegion */ } = this.state
     console.log(events)
     // this.constructMarker()
@@ -89,7 +89,8 @@ class Map extends React.Component {
               // description={event[Object.keys(event)[0]].shortDescription.fi}
               image={soccerBall}
               onCalloutPress={() => {
-                this.setModalVisible(true, event)
+                // this.setModalVisible(true, event)
+                handleNavigation('Event', event)
               }}
             />
           ))}
