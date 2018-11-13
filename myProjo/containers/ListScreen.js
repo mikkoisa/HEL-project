@@ -7,6 +7,7 @@ class ListScreen extends React.Component {
     super(props);
     this.state = {
       events: null,
+      isLoading: true,
     }
   }
 
@@ -14,7 +15,6 @@ class ListScreen extends React.Component {
     this.getEventList()
   }
 
-  // Maybe add this to helper class????????
   handleNavigation = (routeName, event) => {
     const { navigation } = this.props
     navigation.navigate(routeName, event)
@@ -26,6 +26,7 @@ class ListScreen extends React.Component {
         console.log(result.data)
         this.setState({
           events: result.data,
+          isLoading: false,
         })
       })
   }
@@ -46,9 +47,10 @@ class ListScreen extends React.Component {
   }
 
   render() {
-    const { events } = this.state 
+    const { events, isLoading } = this.state 
     return (
       <EventList
+        isLoading={isLoading}
         handleNavigation={this.handleNavigation}
         events={events}
       />

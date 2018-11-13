@@ -11,6 +11,10 @@
         "object-curly-newline": 0,
         "react/forbid-prop-types": 0,
         "jsx-quotes": 0,
-        "react/prop-types": 0
-    }
+        "react/prop-types": 0,
+        "react/destructuring-assignment": 0
+    },
+    "globals": {
+        "navigator": true
+      }
 }

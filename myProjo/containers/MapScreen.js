@@ -1,14 +1,15 @@
 import React from 'react'
 import Map from '../components/Map'
-import fetchGetJSON from '../util/FetchGetJSON'
+// import fetchGetJSON from '../util/FetchGetJSON'
 import FetchHelper from '../helpers/FetchHelper'
-// import { baseEventApiUrl } from '../constants/config'
+import baseEventApiUrl from '../constants/config'
 
 class MapScreen extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {  
+      isLoading: true,
       // Set default position
       position: {
         coords: {
@@ -25,12 +26,13 @@ class MapScreen extends React.Component {
         timestamp: null,
       },
       events: [
-        { location: { position: { coordinates: [60.1695291, 24.9383613] } }, name: { fi: 'suomalainen' }, shortDescription: { fi: 'lyhyt kuvaus' }, id: '5' },
+        { location: { position: { coordinates: [60.1695291, 24.9383613] }, name: { fi: 'sijainnin nimi' } }, name: { fi: 'suomalainen' }, short_description: { fi: 'lyhyt kuvaus' }, id: '5' },
       ],
     };
   }
 
   componentDidMount() {
+    console.log(baseEventApiUrl)
     this.getInitialLocation()
     // this.followLocation()
     this.getEventList()
@@ -47,6 +49,7 @@ class MapScreen extends React.Component {
         console.log(result.data)
         this.setState({
           events: result.data,
+          isLoading: false,
         })
       })
 
@@ -113,13 +116,19 @@ class MapScreen extends React.Component {
 
   getInitialLocation = () => {
     // Get the coordinates and set them to states
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        position.coords.latitudeDelta = 0.02,
-        position.coords.longitudeDelta = 0.02,
-        this.updatePosition(position)
-      },
-    )
+    let currentPos = null
+    navigator.geolocation.getCurrentPosition((position) => {
+      if (position) { 
+        currentPos = position
+        currentPos.coords.latitudeDelta = 0.02
+        currentPos.coords.longitudeDelta = 0.02
+      }
+        
+      
+      this.setState({
+        position: currentPos,
+      })
+    })
   }
 
   updatePosition = (position) => {
@@ -138,9 +147,10 @@ class MapScreen extends React.Component {
 
   render() {
     // console.log(this.props)
-    const { position, events } = this.state
+    const { position, events, isLoading } = this.state
     return (
       <Map
+        isLoading={isLoading}
         handleNavigation={this.handleNavigation}
         position={position}
         events={events}

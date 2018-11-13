@@ -1,6 +1,6 @@
 import React from 'react'
 // import PropTypes from 'prop-types'
-import { FlatList, StyleSheet, View } from 'react-native'
+import { FlatList, StyleSheet, View, ActivityIndicator } from 'react-native'
 import Modal from 'react-native-modal'
 import EventListItem from './EventListItem'
 import EventDetails from './EventDetails'
@@ -32,13 +32,16 @@ class EventList extends React.Component {
   }
 
   render() {
-    const { events, handleNavigation } = this.props
+    const { events, handleNavigation, isLoading } = this.props
     const { modalVisible, clickedEvent } = this.state
     
     return (
-      <View>
+      
+      <View style={styles.container}>
+        <View style={styles.loader}>
+          <ActivityIndicator animating={isLoading} size={70} color="#f57c00" />
+        </View>
         <FlatList
-          style={styles.container}
           data={events}
           renderItem={({ item }) => (
             <EventListItem
@@ -78,7 +81,13 @@ EventList.defaultProps = {
 
 const styles = StyleSheet.create({
   container: {
-    // padding: 10,
+    flex: 1,
+    justifyContent: 'center',
+  },
+  loader: {
+    position: 'absolute',
+    marginHorizontal: '50%',
+    height: 50,
   },
 })
 

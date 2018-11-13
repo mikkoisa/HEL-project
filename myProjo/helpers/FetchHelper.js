@@ -1,7 +1,8 @@
 import fetchGetJSON from '../util/FetchGetJSON'
-import { baseEventApiUrl } from '../constants/config'
+import baseEventApiUrl from '../constants/config'
 
-export default () => fetchGetJSON(`${baseEventApiUrl}/event/?start=today&end=today&division=helsinki&include=location&keyword=yso:p916`)
+export default () => fetchGetJSON(`${baseEventApiUrl.baseEventApiUrl}/event/?start=today&end=today&division=helsinki&include=location&keyword=yso:p916`)
+
 // .then(result => getEventCoordinates(result.data))
 // .catch((e) => {
 //  console.log(e)
