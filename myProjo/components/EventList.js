@@ -5,7 +5,6 @@ import Modal from 'react-native-modal'
 import EventListItem from './EventListItem'
 import EventDetails from './EventDetails'
 
-
 class EventList extends React.Component {
   constructor(props) {
     super(props);
@@ -30,19 +29,22 @@ class EventList extends React.Component {
     const { handleNavigation } = this.props
     handleNavigation(EventDetails, clickedEvent)
   }
+  
 
   render() {
     const { events, handleNavigation, isLoading } = this.props
     const { modalVisible, clickedEvent } = this.state
-    
+
+
     return (
-      
       <View style={styles.container}>
         <View style={styles.loader}>
           <ActivityIndicator animating={isLoading} size={70} color="#f57c00" />
         </View>
         <FlatList
           data={events}
+          // onScrollBeginDrag={() => this.onSwipeUp()}
+          // onMomentumScrollEnd={() => this.onSwipeDown()}
           renderItem={({ item }) => (
             <EventListItem
               item={item} 

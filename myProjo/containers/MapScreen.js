@@ -2,7 +2,8 @@ import React from 'react'
 import Map from '../components/Map'
 // import fetchGetJSON from '../util/FetchGetJSON'
 import FetchHelper from '../helpers/FetchHelper'
-import baseEventApiUrl from '../constants/config'
+// import baseEventApiUrl from '../constants/config'
+
 
 class MapScreen extends React.Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class MapScreen extends React.Component {
   }
 
   componentDidMount() {
-    console.log(baseEventApiUrl)
+    // console.log(baseEventApiUrl)
     this.getInitialLocation()
     // this.followLocation()
     this.getEventList()
@@ -46,7 +47,7 @@ class MapScreen extends React.Component {
   getEventList = () => {
     FetchHelper()
       .then((result) => {
-        console.log(result.data)
+        // console.log(result.data)
         this.setState({
           events: result.data,
           isLoading: false,

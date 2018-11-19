@@ -1,15 +1,20 @@
 import React from 'react'
-import { Text, View, StyleSheet, TextInput, Button } from 'react-native'
-import Form from 'react-native-form'
-import MapView, { Marker } from 'react-native-maps'
-// import { Marker } from 'react-native-maps'
+import { View, StyleSheet, Button, DatePickerAndroid } from 'react-native'
+import moment from 'moment'
+import TopBar from './TopBar'
+import FormOne from './FormOne'
+import FormTwo from './FormTwo';
 
 class CreateScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      latText: null,
-      lngText: null,
+      oneHidden: false,
+      twoHidden: true,
+      pickedDate: moment().format(),
+      pickedLocation: { latitude: 60.1695291, longitude: 24.9383613 },
+      // latText: null,
+      // lngText: null,
       titleText: null,
       descText: null,
       marker: { latitude: 60.1695291, longitude: 24.9383613 },
@@ -26,60 +31,62 @@ class CreateScreen extends React.Component {
     console.log(coordinates)
   }
 
+  saveText = (text) => {
+    console.log(text)
+    this.setState({ titleText: text })
+  }
+
+  moveMap = (location) => {
+    // this.setState({ pickedLocation: location })
+    console.log(location)
+  }
+
+  changeTab = () => {
+    const { oneHidden } = this.state
+    if (!oneHidden) {
+      this.setState({
+        oneHidden: true,
+        twoHidden: false,
+      })
+    } else {
+      this.setState({
+        oneHidden: false,
+        twoHidden: true,
+      })
+    }
+  }
+
+  askDate = async () => {
+    try {
+      const { action, year, month, day } = await DatePickerAndroid.open({
+        // Use `new Date()` for current date.
+        // May 25 2020. Month 0 is January.
+        mode: 'default',
+        date: new Date(),
+      });
+      if (action !== DatePickerAndroid.dismissedAction) {
+        const newDate = new Date(year, month, day);
+        console.log(newDate)
+        // Selected year, month (0-11), day
+      }
+    } catch ({ code, message }) {
+      console.log(message);
+    }
+  }
+
   render() {
-    const { latText, lngText, marker } = this.state
+    const { /* marker, */ pickedDate, /* pickedLocation, */ oneHidden, twoHidden } = this.state
+    console.log(pickedDate)
     return (
       <View style={styles.container}>
-        <Form>
-          <View style={styles.form}>
-            <Text>Title </Text>
-            <TextInput 
-              onChangeText={text => this.setState({ titleText: text })}
-            />
-            <Text>Description </Text>
-            <TextInput 
-              onChangeText={text => this.setState({ descText: text })}
-            />
-
-            <View>
-              <Text>Location</Text>
-              <Text>
-                Lat: 
-                {latText}
-              </Text>
-              <Text>
-                Lng: 
-                {lngText}
-              </Text>
-            </View>
-
-            <View style={styles.mapContainer}>
-              <MapView
-                style={styles.map}
-                initialRegion={{
-                  latitude: 60.1665342,
-                  longitude: 24.9350733,
-                  latitudeDelta: 0.02,
-                  longitudeDelta: 0.02,
-                }}
-                onPress={e => this.setState(
-                  { 
-                    latText: e.nativeEvent.coordinate.latitude, 
-                    lngText: e.nativeEvent.coordinate.longitude, 
-                    marker: e.nativeEvent.coordinate,
-                  },
-                )}
-              >
-                <Marker
-                  coordinate={marker}
-                />
-              </MapView>
-            </View>
-          </View>
-        </Form>
-        <Button
-          onPress={this.submitEvent}
-          title="Create"
+        <TopBar />
+        <FormOne hidden={oneHidden} />
+        <FormTwo hidden={twoHidden} />
+        <Button 
+          title='Change tab' 
+          onPress={
+            this.changeTab
+          }
         />
       </View>
     );
@@ -89,26 +96,7 @@ class CreateScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-    // alignItems: 'center',
-    justifyContent: 'center',
-    padding: '10%',
-  },
-  form: {
-
-  },
-
-  mapContainer: {
-    borderRadius: 4,
-    borderWidth: 2,
-    borderColor: '#d6d7da',
-    margin: '10%',
-  },
-  map: {
-    // flex: 1,
-    // justifyContent: 'center',
-    // margin: '10%',
-    padding: '45%',
+    backgroundColor: '#ffffff',
   },
 })
 

@@ -2,6 +2,7 @@ import React from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { createStackNavigator } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+import { View, Image } from 'react-native'
 
 import MapScreen from '../containers/MapScreen';
 import ListScreen from '../containers/ListScreen';
@@ -13,7 +14,19 @@ const ListStack = createStackNavigator({
   List: {
     screen: ListScreen,
     navigationOptions: {
-      header: null,
+      header: (
+        <View
+          style={{
+            height: '12%',
+            borderBottomWidth: 1,
+            borderColor: '#00000012',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Image source={require('../assets/imageedit_3_4217153951.png')} /* eslint-disable-line global-require */ />   
+        </View>
+      ),
     },
   },
   EventList: {
@@ -34,7 +47,19 @@ const MapStack = createStackNavigator({
   Map: {
     screen: MapScreen,
     navigationOptions: {
-      header: null,
+      header: (
+        <View
+          style={{
+            height: '12%',
+            borderBottomWidth: 1,
+            borderColor: '#00000012',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Image source={require('../assets/imageedit_3_4217153951.png')} /* eslint-disable-line global-require */ />   
+        </View>
+      ),
     },
   },
   Event: {
@@ -89,6 +114,7 @@ const RootNavigator = createMaterialBottomTabNavigator({
   tabBarOptions: { 
     showIcon: true, 
   }, 
+  
   initialRouteName: 'Map',
   activeColor: '#f57c00',
   inactiveColor: '#000000',
