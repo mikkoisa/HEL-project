@@ -51,7 +51,7 @@ class CustomDatePicker extends React.Component {
 
   askTime = async () => {
     try {
-      const { action, hour, minute } = await TimePickerAndroid.open({
+      const { action /* , hour, minute */ } = await TimePickerAndroid.open({
         hour: 14,
         minute: 0,
         is24Hour: false, // Will display '2 PM'

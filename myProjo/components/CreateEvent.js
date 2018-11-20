@@ -1,6 +1,5 @@
 import React from 'react'
 import { View, StyleSheet, Button, DatePickerAndroid } from 'react-native'
-import moment from 'moment'
 import TopBar from './TopBar'
 import FormOne from './FormOne'
 import FormTwo from './FormTwo';
@@ -11,34 +10,53 @@ class CreateScreen extends React.Component {
     this.state = {
       oneHidden: false,
       twoHidden: true,
-      pickedDate: moment().format(),
+
+      name: '',
+      shortDescription: '',
+      description: '',
+
+      pickedDate: '',
+      pickedTime: '',
       pickedLocation: { latitude: 60.1695291, longitude: 24.9383613 },
+
       // latText: null,
       // lngText: null,
-      titleText: null,
-      descText: null,
-      marker: { latitude: 60.1695291, longitude: 24.9383613 },
+      // marker: { latitude: 60.1695291, longitude: 24.9383613 },
     }
   }
 
   submitEvent = () => {
-    const { titleText, descText, marker } = this.state
-    // console.log(this.form.getValues())
-    console.log(titleText + descText + marker)
+    const { name, shortDescription, description, 
+      pickedDate, pickedTime, pickedLocation } = this.state
+    
+    console.log(name, shortDescription, description, 
+      pickedDate, pickedTime, pickedLocation)
   }
 
   getCoordinates = (coordinates) => {
     console.log(coordinates)
   }
 
-  saveText = (text) => {
-    console.log(text)
-    this.setState({ titleText: text })
+  saveText = (type, text) => {
+    if (type === 'name') {
+      this.setState({ name: text })
+    } else if (type === 'shortDescription') {
+      this.setState({ shortDescription: text })
+    } else if (type === 'description') {
+      this.setState({ description: text })
+    }
+  }
+
+  saveDate = (date) => {
+    this.setState({ pickedDate: date })
+  }
+
+  saveTime = (time) => {
+    this.setState({ pickedTime: time })
   }
 
   moveMap = (location) => {
-    // this.setState({ pickedLocation: location })
-    console.log(location)
+    this.setState({ pickedLocation: location })
   }
 
   changeTab = () => {
@@ -75,13 +93,24 @@ class CreateScreen extends React.Component {
   }
 
   render() {
-    const { /* marker, */ pickedDate, /* pickedLocation, */ oneHidden, twoHidden } = this.state
-    console.log(pickedDate)
+    const { pickedLocation, oneHidden, twoHidden,
+      name, shortDescription, description } = this.state
     return (
       <View style={styles.container}>
         <TopBar />
-        <FormOne hidden={oneHidden} />
-        <FormTwo hidden={twoHidden} />
+        <FormOne 
+          name={name}
+          shortDescription={shortDescription}
+          description={description}
+          hidden={oneHidden}
+          saveText={this.saveText}
+          saveDate={this.saveDate}
+          saveTime={this.saveTime}
+        />
+        <FormTwo 
+          hidden={twoHidden}
+          pickedLocation={pickedLocation}
+        />
         <Button 
           title='Change tab' 
           onPress={

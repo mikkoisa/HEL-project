@@ -1,12 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { Text, View, StyleSheet, Button, ScrollView, DatePickerAndroid } from 'react-native'
+import { Text, View, StyleSheet, ScrollView } from 'react-native'
 import CustomTextInput from './CustomTextInput'
 import CustomDatePicker from './CustomDatePicker'
-import CustomSearchBar from './CustomSearchBar'
 
 const FormOne = (props) => {
-  const { hidden, saveText } = props
+  const { hidden, saveText, saveDate, saveTime, name, shortDescription, description } = props
   if (hidden) {
     return null
   }
@@ -18,12 +16,16 @@ const FormOne = (props) => {
       <CustomTextInput
         title='Event name'
         placeholder='Event name'
+        id='name'
+        value={name}
         saveText={saveText}
       />
       <CustomTextInput
         title='Short description'
         placeholder='Short description of the event'
         saveText={saveText}
+        id='shortDescription'
+        value={shortDescription}
       />
       <CustomTextInput
         title='Description'
@@ -31,10 +33,13 @@ const FormOne = (props) => {
         saveText={saveText}
         multiline
         lines={4}
+        id='description'
+        value={description}
       />
       <CustomDatePicker
         title='Date'
-        saveText={saveText}
+        saveDate={saveDate}
+        saveTime={saveTime}
         multiline
       />
       <View style={{ borderTopWidth: 1, borderTopColor: '#00000040', marginVertical: 15 }} />

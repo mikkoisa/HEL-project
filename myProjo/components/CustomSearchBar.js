@@ -1,6 +1,5 @@
 import React from 'react'
-import Icon from 'react-native-vector-icons/FontAwesome'
-import { Text, View, StyleSheet, TextInput } from 'react-native'
+import { Text, View, StyleSheet } from 'react-native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 class CustomSearchBar extends React.Component {
@@ -20,7 +19,7 @@ class CustomSearchBar extends React.Component {
   }
 
   render() {
-    const { saveText, title, placeholder, multiline, moveMap } = this.props
+    const { title, moveMap } = this.props
     const { focused } = this.state
     return (
       <View>
