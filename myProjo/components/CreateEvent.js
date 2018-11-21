@@ -15,7 +15,8 @@ class CreateScreen extends React.Component {
       name: '',
       shortDescription: '',
       description: '',
-
+      minAge: '',
+      maxAge: '',
       pickedDate: '',
       pickedTime: '',
       pickedLocation: { latitude: 60.1695291, longitude: 24.9383613 },
@@ -28,10 +29,10 @@ class CreateScreen extends React.Component {
 
   submitEvent = () => {
     const { name, shortDescription, description, 
-      pickedDate, pickedTime, pickedLocation } = this.state
+      pickedDate, pickedTime, pickedLocation, minAge, maxAge } = this.state
     
     console.log(name, shortDescription, description, 
-      pickedDate, pickedTime, pickedLocation)
+      pickedDate, pickedTime, pickedLocation, minAge, maxAge)
   }
 
   getCoordinates = (coordinates) => {

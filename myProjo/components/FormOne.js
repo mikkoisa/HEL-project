@@ -10,9 +10,7 @@ const FormOne = (props) => {
   }
   return (
     <ScrollView style={styles.form}/* keyboardShouldPersistTaps='always' */>
-      <Text style={styles.title}>
-            Event information
-      </Text>
+      <Text style={styles.title}>Event information</Text>
       <CustomTextInput
         title='Event name'
         placeholder='Event name'
@@ -37,17 +35,21 @@ const FormOne = (props) => {
         value={description}
       />
 
-      <View style={{ flexDirection: 'row' }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
         <CustomTextInput 
-          style={{ width: '25%' }}
+          style={{ width: 70 }}
           title='Age'
-          placeholder='Min age'
+          placeholder='min'
+          id='minAge'
+          saveText={saveText}
         />
-        <Text> - </Text>
+        <Text style={{ marginHorizontal: 12, marginVertical: 25 }}> - </Text>
         <CustomTextInput
-          style={{ width: '50%' }}
-          title='Age'
-          placeholder='Max age'
+          style={{ width: 70 }}
+          // title='Max age'
+          placeholder='max'
+          id='maxAge'
+          saveText={saveText}
         />
       </View>
       
