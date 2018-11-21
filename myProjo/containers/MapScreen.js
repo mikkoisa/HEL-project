@@ -1,8 +1,8 @@
 import React from 'react'
 import Map from '../components/Map'
-// import fetchGetJSON from '../util/FetchGetJSON'
-import FetchHelper from '../helpers/FetchHelper'
-// import baseEventApiUrl from '../constants/config'
+import fetchGetJSON from '../util/FetchGetJSON'
+// import FetchHelper from '../helpers/FetchHelper'
+import apiUrls from '../constants/config'
 
 
 class MapScreen extends React.Component {
@@ -45,7 +45,9 @@ class MapScreen extends React.Component {
   }
 
   getEventList = () => {
-    FetchHelper()
+    // FetchHelper()
+    // Test that this fetches correctly.
+    fetchGetJSON(`${apiUrls.baseEventApiUrl}${apiUrls.helsinkiToday}`)
       .then((result) => {
         // console.log(result.data)
         this.setState({
