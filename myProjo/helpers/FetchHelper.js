@@ -1,6 +1,7 @@
 import fetchGetJSON from '../util/FetchGetJSON'
 import baseEventApiUrl from '../constants/config'
 
+// TODO: .urlThatYouWant, add all hardcoded url ends to config.js
 export default () => fetchGetJSON(`${baseEventApiUrl.baseEventApiUrl}/event/?start=today&end=today&division=helsinki&include=location&keyword=yso:p916`)
 
 // .then(result => getEventCoordinates(result.data))
