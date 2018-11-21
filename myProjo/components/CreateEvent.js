@@ -1,8 +1,9 @@
 import React from 'react'
-import { View, StyleSheet, Button, DatePickerAndroid } from 'react-native'
+import { View, StyleSheet, DatePickerAndroid, TouchableOpacity } from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome'
 import TopBar from './TopBar'
 import FormOne from './FormOne'
-import FormTwo from './FormTwo';
+import FormTwo from './FormTwo'
 
 class CreateScreen extends React.Component {
   constructor(props) {
@@ -110,15 +111,23 @@ class CreateScreen extends React.Component {
         <FormTwo 
           hidden={twoHidden}
           pickedLocation={pickedLocation}
+          moveMap={this.moveMap}
         />
-        <Button 
-          title='Change tab' 
+        <TouchableOpacity
+          style={twoHidden ? styles.nextbutton : styles.prevbutton}
+          title='Change tab'
           onPress={
             this.changeTab
           }
-        />
+        >
+          <Icon
+            style={{ color: '#f57c00' }}
+            name={twoHidden ? 'arrow-circle-right' : 'arrow-circle-left' }
+            size={30}
+          />
+        </TouchableOpacity>
       </View>
-    );
+    )
   }
 }
 
@@ -126,6 +135,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
+  },
+  nextbutton: {
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    marginRight: '15%',
+    marginBottom: '15%',
+    width: 40,
+    height: 40,
+    // backgroundColor: '#f57c00',
+    borderRadius: 50,
+  },
+  prevbutton: {
+    alignItems: 'center',
+    marginLeft: '15%',
+    marginBottom: '15%',
+    width: 40,
+    height: 40,
+    // backgroundColor: '#f57c00',
+    borderRadius: 50,
   },
 })
 

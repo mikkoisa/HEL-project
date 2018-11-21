@@ -36,6 +36,21 @@ const FormOne = (props) => {
         id='description'
         value={description}
       />
+
+      <View style={{ flexDirection: 'row' }}>
+        <CustomTextInput 
+          style={{ width: '25%' }}
+          title='Age'
+          placeholder='Min age'
+        />
+        <Text> - </Text>
+        <CustomTextInput
+          style={{ width: '50%' }}
+          title='Age'
+          placeholder='Max age'
+        />
+      </View>
+      
       <CustomDatePicker
         title='Date'
         saveDate={saveDate}
@@ -57,7 +72,7 @@ const styles = StyleSheet.create({
   },
   form: {
     paddingHorizontal: '15%',
-    paddingVertical: '10%',
+    paddingTop: '10%',
   },
 })
 

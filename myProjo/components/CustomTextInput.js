@@ -18,11 +18,11 @@ class CustomTextInput extends React.Component {
   }
 
   render() {
-    const { saveText, title, placeholder, multiline, lines, id, value } = this.props
+    const { saveText, title, placeholder, multiline, lines, id, value, style } = this.props
     const { focused } = this.state
     return (
       <View>
-        <View style={focused ? styles.textFieldFocused : styles.textField}>
+        <View style={[focused ? styles.textFieldFocused : styles.textField, style]}>
           <TextInput
             style={{ color: '#00000087' }}
             value={value}

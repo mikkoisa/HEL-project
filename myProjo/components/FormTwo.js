@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 
   form: {
     paddingHorizontal: '15%',
-    paddingVertical: '10%',
+    paddingTop: '10%',
   },
   mapContainer: {
     borderRadius: 4,
