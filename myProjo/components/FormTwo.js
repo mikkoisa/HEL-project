@@ -1,11 +1,11 @@
 import React from 'react'
-import { View, StyleSheet, ScrollView } from 'react-native'
+import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
 import MapView from 'react-native-maps'
 import CustomSearchBar from './CustomSearchBar'
 
 
 const FormTwo = (props) => {
-  const { hidden, moveMap, pickedLocation } = props
+  const { hidden, moveMap, pickedLocation, submitEvent } = props
   if (hidden) {
     return null
   }
@@ -34,6 +34,14 @@ const FormTwo = (props) => {
           }}
         />
       </View>
+      <TouchableOpacity
+        style={styles.createButton}
+        title='Submit Event'
+        onPress={
+          submitEvent
+        }
+      >
+      </TouchableOpacity>
     </ScrollView>
   ) 
 }
@@ -55,6 +63,11 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     // margin: '10%',
     padding: '45%',
+  },
+  createButton: {
+    width: 100,
+    height: 50,
+    backgroundColor: '#f57c00',
   },
 })
 

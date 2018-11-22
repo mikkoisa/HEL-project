@@ -18,13 +18,14 @@ class CustomTextInput extends React.Component {
   }
 
   render() {
-    const { saveText, title, placeholder, multiline, lines, id, value, style } = this.props
+    const { saveText, title, placeholder, multiline, lines, id, value, style, keyType } = this.props
     const { focused } = this.state
     return (
       <View>
         <View style={[focused ? styles.textFieldFocused : styles.textField, style]}>
           <TextInput
             style={{ color: '#00000087' }}
+            keyboardType={keyType}
             value={value}
             placeholder={placeholder}
             underlineColorAndroid='transparent'
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#00000040',
     borderRadius: 3,
-    paddingHorizontal: 10,
+    paddingHorizontal: '%',
     paddingVertical: 5,
     marginVertical: 15,
   },

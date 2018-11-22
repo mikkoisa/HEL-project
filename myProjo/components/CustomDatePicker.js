@@ -31,35 +31,35 @@ class CustomDatePicker extends React.Component {
 
 
   askDate = async () => {
+    const { saveDate } = this.props
     try {
       const { action, year, month, day } = await DatePickerAndroid.open({
-        // Use `new Date()` for current date.
-        // May 25 2020. Month 0 is January.
         mode: 'default',
         date: new Date(),
       });
       if (action !== DatePickerAndroid.dismissedAction) {
-        const newDate = new Date(year, month, day);
-        console.log(newDate)
+        saveDate(year, month, day)
         this.dateUnFocus()
-        // Selected year, month (0-11), day
       }
+      this.dateUnFocus()
     } catch ({ code, message }) {
       console.log(message);
     }
   }
 
   askTime = async () => {
+    const { saveTime } = this.props
     try {
-      const { action /* , hour, minute */ } = await TimePickerAndroid.open({
+      const { action, hour, minute } = await TimePickerAndroid.open({
         hour: 14,
         minute: 0,
-        is24Hour: false, // Will display '2 PM'
+        is24Hour: true,
       });
       if (action !== TimePickerAndroid.dismissedAction) {
-        // Selected hour (0-23), minute (0-59)
+        saveTime(hour, minute)
         this.timeUnFocus()
       }
+      this.timeUnFocus()
     } catch ({ code, message }) {
       console.warn('Cannot open time picker', message);
     }
@@ -67,6 +67,9 @@ class CustomDatePicker extends React.Component {
 
   render() {
     const { dateFocused, timeFocused } = this.state
+    const { date, time } = this.props
+    time.hour = (`0${time.hour}`).slice(-2);
+    time.minute = (`0${time.minute}`).slice(-2);
     return (
       <View style={styles.container}>
         <View style={dateFocused ? styles.textFieldFocused : styles.textField}>
@@ -82,7 +85,11 @@ class CustomDatePicker extends React.Component {
                 size={18}
               />
               <Text style={styles.content}>
-                00/00/00
+                {date.day}
+                /
+                {date.month}
+                /
+                {date.year}
               </Text>
               
             </View>
@@ -108,7 +115,9 @@ class CustomDatePicker extends React.Component {
                 size={18}
               />
               <Text style={styles.content}>
-                00:00
+                {time.hour}
+                :
+                {time.minute}
               </Text>
             </View>
           </TouchableWithoutFeedback>
@@ -160,7 +169,9 @@ const styles = StyleSheet.create({
   },
   content: {
     color: '#00000040',
-    padding: 5,
+    paddingVertical: 5,
+    paddingRight: 15,
+    paddingLeft: 5,
   },
   icon: {
     color: '#00000087',
@@ -178,7 +189,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignItems: 'center',
     top: 5,
-    right: 50,
+    right: 70,
     backgroundColor: '#ffffff',
     paddingHorizontal: 10,
   },
