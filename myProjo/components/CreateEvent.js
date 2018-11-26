@@ -1,7 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, DatePickerAndroid, TouchableOpacity } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome'
-import TopBar from './TopBar'
+import { View, StyleSheet, Text, TouchableWithoutFeedback } from 'react-native'
 import FormOne from './FormOne'
 import FormTwo from './FormTwo'
 import PostData from '../util/FetchPostJSON'
@@ -21,8 +19,12 @@ class CreateScreen extends React.Component {
       maxAge: '',
       date: { year: '00', month: '00', day: '00' },
       time: { hour: '00', minute: '00' },
+<<<<<<< HEAD
       pickedLocation: { latitude: 60.1695291, longitude: 24.9383613 },
       
+=======
+      pickedLocation: { lat: 60.1695291, lng: 24.9383613 },
+>>>>>>> 02a696abc61636e6a82f13f25596cb0c12e921c7
 
       // latText: null,
       // lngText: null,
@@ -93,49 +95,48 @@ class CreateScreen extends React.Component {
     this.setState({ time: { hour, minute } })
   }
 
-  moveMap = (location) => {
-    this.setState({ pickedLocation: location })
-  }
-
-  changeTab = () => {
-    const { oneHidden } = this.state
-    if (!oneHidden) {
-      this.setState({
-        oneHidden: true,
-        twoHidden: false,
-      })
+  moveMap = (location, type) => {
+    if (type === 'move') {
+      console.log(location)
+      this.setState({ pickedLocation: { lat: location.latitude, lng: location.longitude } })
     } else {
-      this.setState({
-        oneHidden: false,
-        twoHidden: true,
-      })
-    }
+      this.setState({ pickedLocation: location })
+    }  
   }
 
-  askDate = async () => {
-    try {
-      const { action, year, month, day } = await DatePickerAndroid.open({
-        // Use `new Date()` for current date.
-        // May 25 2020. Month 0 is January.
-        mode: 'default',
-        date: new Date(),
-      });
-      if (action !== DatePickerAndroid.dismissedAction) {
-        const newDate = new Date(year, month, day);
-        console.log(newDate)
-        // Selected year, month (0-11), day
-      }
-    } catch ({ code, message }) {
-      console.log(message);
-    }
+  changeToTabTwo = () => {
+    this.setState({
+      oneHidden: true,
+      twoHidden: false,
+    })
   }
+
+  changeToTabOne = () => {
+    this.setState({
+      oneHidden: false,
+      twoHidden: true,
+    })
+  }
+
 
   render() {
     const { pickedLocation, oneHidden, twoHidden,
       name, shortDescription, description, date, time, minAge, maxAge } = this.state
     return (
       <View style={styles.container}>
-        <TopBar />
+        <Text style={styles.pageTitle}>Create Event</Text>
+        <View style={styles.tabTitles}>
+          <TouchableWithoutFeedback onPress={this.changeToTabOne}>
+            <View style={{ width: '50%' }}>
+              <Text style={oneHidden ? styles.title : styles.titleFocused}>Information</Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={this.changeToTabTwo}>
+            <View style={{ width: '50%' }}>
+              <Text style={twoHidden ? styles.title : styles.titleFocused}>Location</Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
         <FormOne 
           name={name}
           shortDescription={shortDescription}
@@ -144,6 +145,7 @@ class CreateScreen extends React.Component {
           saveText={this.saveText}
           saveDate={this.saveDate}
           saveTime={this.saveTime}
+          changeTab={this.changeToTabTwo}
           date={date}
           time={time}
           minAge={minAge}
@@ -151,23 +153,12 @@ class CreateScreen extends React.Component {
         />
         <FormTwo
           hidden={twoHidden}
-          pickedLocation={pickedLocation}
+          pickedLocation={pickedLocation} 
           moveMap={this.moveMap}
           submitEvent={this.submitEvent}
+          changeTab={this.changeToTabOne}
         />
-        <TouchableOpacity
-          style={twoHidden ? styles.nextbutton : styles.prevbutton}
-          title='Change tab'
-          onPress={
-            this.changeTab
-          }
-        >
-          <Icon
-            style={{ color: '#f57c00' }}
-            name={twoHidden ? 'arrow-circle-right' : 'arrow-circle-left'}
-            size={30}
-          />
-        </TouchableOpacity>
+        
       </View>
     )
   }
@@ -175,28 +166,44 @@ class CreateScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: '10%',
     flex: 1,
     backgroundColor: '#ffffff',
   },
-  nextbutton: {
-    alignSelf: 'flex-end',
-    alignItems: 'center',
-    marginRight: '15%',
-    marginBottom: '5%',
-    width: '10%',
-    height: '10%',
-    // backgroundColor: '#f57c00',
-    borderRadius: 50,
+  tabTitles: {
+    paddingHorizontal: '15%',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
-  prevbutton: {
-    alignItems: 'center',
-    marginLeft: '15%',
-    marginBottom: '15%',
-    width: '10%',
-    height: '10%',
-    // backgroundColor: '#f57c00',
-    borderRadius: 50,
+  titleFocused: {
+    // flex: 1,
+    // width: '50%',
+    textAlign: 'center',
+    // paddingHorizontal: '5%',
+    // marginHorizontal: '5%',
+    fontSize: 16,
+    fontFamily: 'sans-serif',
+    color: '#f57c00',
+    borderBottomWidth: 1,
+    borderBottomColor: '#f57c00',
   },
+  title: {
+    // flex: 1,
+    // width: '50%',
+    textAlign: 'center',
+    // paddingHorizontal: '5%',
+    // marginHorizontal: '5%',
+    fontSize: 16,
+    fontFamily: 'sans-serif',
+    color: '#00000087',
+  },
+  pageTitle: {
+    paddingBottom: '5%',
+    textAlign: 'center',
+    fontSize: 26,
+    fontFamily: 'sans-serif',
+    color: '#00000087',
+  }, 
 })
 
 export default CreateScreen

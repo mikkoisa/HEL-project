@@ -74,6 +74,7 @@ const RootNavigator = createMaterialBottomTabNavigator({
   Map: {
     screen: MapStack,
     navigationOptions: () => ({
+      drawerLabel: 'Notifications',
       tabBarIcon: ({ tintColor }) => (
         <Icon
           name="map"
