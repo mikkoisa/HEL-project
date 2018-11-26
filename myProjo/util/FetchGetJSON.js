@@ -15,12 +15,12 @@ export default (url, customHeaders = {}) => {
     .then((response) => {
       // console.log(response)
       if (response.status >= 400) {
-        console.log(`Fetch error: ${  response.status}`)
+        console.log(`Fetch error: ${response.status}`)
         Promise.reject(null, response.status)
       }
       return response.json();
     })
     .catch((error, statusCode) => {
-      console.log(`Something went wrong: ${  error}`)
+      console.log(`Something went wrong: ${error} with ${statusCode}`)
     })
 }
