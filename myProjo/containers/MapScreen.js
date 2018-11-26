@@ -52,7 +52,8 @@ class MapScreen extends React.Component {
           isLoading: false,
         })
       })
-
+  }
+  
   getInitialLocation = () => {
     // Get the coordinates and set them to states
     let currentPos = null

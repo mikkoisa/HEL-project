@@ -4,6 +4,8 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import TopBar from './TopBar'
 import FormOne from './FormOne'
 import FormTwo from './FormTwo'
+import PostData from '../util/FetchPostJSON'
+import ApiUrls from '../constants/config'
 
 class CreateScreen extends React.Component {
   constructor(props) {
@@ -20,6 +22,7 @@ class CreateScreen extends React.Component {
       date: { year: '00', month: '00', day: '00' },
       time: { hour: '00', minute: '00' },
       pickedLocation: { latitude: 60.1695291, longitude: 24.9383613 },
+      
 
       // latText: null,
       // lngText: null,
@@ -41,6 +44,24 @@ class CreateScreen extends React.Component {
     
     console.log(name, shortDescription, description, 
       newDate, pickedLocation, minAge, maxAge)
+    
+    const mockData = {
+      position: {
+        coordinates: [
+          24.939352,
+          60.168512,
+        ],
+        type: 'Point',
+      },
+      name: {
+        fi: 'Mannerheimintie 14',
+      },
+    }
+    // Posting first only location data. 
+    PostData(ApiUrls.postLocation, mockData)
+      .then((result) => {
+        console.log(result)
+      })
   }
 
   getCoordinates = (coordinates) => {
