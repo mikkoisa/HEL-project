@@ -1,7 +1,6 @@
 import React from 'react'
 import Map from '../components/Map'
 import fetchGetJSON from '../util/FetchGetJSON'
-// import FetchHelper from '../helpers/FetchHelper'
 import apiUrls from '../constants/config'
 
 
@@ -45,8 +44,6 @@ class MapScreen extends React.Component {
   }
 
   getEventList = () => {
-    // FetchHelper()
-    // Test that this fetches correctly.
     fetchGetJSON(`${apiUrls.baseEventApiUrl}${apiUrls.helsinkiToday}`)
       .then((result) => {
         // console.log(result.data)
@@ -55,67 +52,6 @@ class MapScreen extends React.Component {
           isLoading: false,
         })
       })
-
-    // console.log(baseEventApiUrl)
-    /*
-    fetchGetJSON(`${baseEventApiUrl}/event/?start=today&end=today&division=helsinki`)
-      .then((result) => {
-        // Results come here and data contains first 20-25 event
-        // it there is 'next' which is needed if more events are needed
-        // const list = result.data
-        // console.log(list.length)
-        this.getEventCoordinates(result.data);
-      })
-      .catch(() => {
-        console.log('Went to catch')
-      })    */
-  }
-
-  /* getEventCoordinates = (list) => {
-     FetchHelper(list)
-      .then((result) => {
-        console.log('heiiiiiiiiiiiiiiiii')
-        this.setState({
-          events: result,
-        })
-      }) 
-
-    // Gets location id from object and puts it to new array.
-    const locationList = list.map(item => item.location['@id']);
-    // gets promises from fetches and then gets array that contains all place information
-    this.getLocations(locationList)
-      .then((values) => {
-        this.combineEventInfo(list, values)
-      }).catch((e) => {
-        console.log(e)
-      })
-} 
-
-  getLocations = (locationList) => {
-    // Multiple fetches and after fetching it continues
-    const locationResult = []
-    for (let i = 0; i < locationList.length; i += 1) {
-      console.log('fetchaa sijainnin')
-      locationResult.push(fetchGetJSON(locationList[i]))
-    }
-    return Promise.all(locationResult)
-  }
-
-  combineEventInfo = (list, values) => {
-    const combinedList = []
-    for (let i = 0; i < list.length; i += 1) {
-      combinedList.push({ ...list[i], 
-        ...values[i].position, 
-        ...{ locName: values[i].name }, 
-        ...{ locAddress: values[i].street_address,
-        } })
-    }
-    console.log(combinedList)
-    
-    this.setState({
-      events: combinedList,
-    })
-  }  */
 
   getInitialLocation = () => {
     // Get the coordinates and set them to states

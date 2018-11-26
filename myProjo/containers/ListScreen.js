@@ -1,6 +1,7 @@
 import React from 'react'
 import EventList from '../components/EventList'
-import FetchHelper from '../helpers/FetchHelper'
+import fetchGetJSON from '../util/FetchGetJSON'
+import apiUrls from '../constants/config'
 
 class ListScreen extends React.Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class ListScreen extends React.Component {
   }
 
   getEventList = () => {
-    FetchHelper()
+    fetchGetJSON(`${apiUrls.baseEventApiUrl}${apiUrls.helsinkiToday}`)
       .then((result) => {
         console.log(result.data)
         this.setState({
