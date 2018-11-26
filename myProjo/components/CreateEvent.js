@@ -1,8 +1,9 @@
 import React from 'react'
-import { View, StyleSheet, Button, DatePickerAndroid } from 'react-native'
+import { View, StyleSheet, DatePickerAndroid, TouchableOpacity } from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome'
 import TopBar from './TopBar'
 import FormOne from './FormOne'
-import FormTwo from './FormTwo';
+import FormTwo from './FormTwo'
 
 class CreateScreen extends React.Component {
   constructor(props) {
@@ -14,9 +15,10 @@ class CreateScreen extends React.Component {
       name: '',
       shortDescription: '',
       description: '',
-
-      pickedDate: '',
-      pickedTime: '',
+      minAge: '',
+      maxAge: '',
+      date: { year: '00', month: '00', day: '00' },
+      time: { hour: '00', minute: '00' },
       pickedLocation: { latitude: 60.1695291, longitude: 24.9383613 },
 
       // latText: null,
@@ -27,10 +29,18 @@ class CreateScreen extends React.Component {
 
   submitEvent = () => {
     const { name, shortDescription, description, 
-      pickedDate, pickedTime, pickedLocation } = this.state
+      date, time, pickedLocation, minAge, maxAge } = this.state
+
+    console.log(date.year, date.month, date.day)
+    console.log(time.hour, time.minute)
+    const adjustedMonth = date.month - 1
+    const adjustedHour = time.hour + 2
+    const newDate = new Date(date.year, adjustedMonth, date.day, adjustedHour, time.minute)
+
+    console.log(newDate)
     
     console.log(name, shortDescription, description, 
-      pickedDate, pickedTime, pickedLocation)
+      newDate, pickedLocation, minAge, maxAge)
   }
 
   getCoordinates = (coordinates) => {
@@ -44,15 +54,22 @@ class CreateScreen extends React.Component {
       this.setState({ shortDescription: text })
     } else if (type === 'description') {
       this.setState({ description: text })
+    } else if (type === 'minAge') {
+      this.setState({ minAge: text })
+    } else if (type === 'maxAge') {
+      this.setState({ maxAge: text })
     }
   }
 
-  saveDate = (date) => {
-    this.setState({ pickedDate: date })
+  saveDate = (year, month, day) => {
+    console.log(day, month, year)
+    const adjustedMonth = month + 1
+    this.setState({ date: { year, month: adjustedMonth, day } })
   }
 
-  saveTime = (time) => {
-    this.setState({ pickedTime: time })
+  saveTime = (hour, minute) => {
+    console.log(hour, minute)
+    this.setState({ time: { hour, minute } })
   }
 
   moveMap = (location) => {
@@ -94,7 +111,7 @@ class CreateScreen extends React.Component {
 
   render() {
     const { pickedLocation, oneHidden, twoHidden,
-      name, shortDescription, description } = this.state
+      name, shortDescription, description, date, time, minAge, maxAge } = this.state
     return (
       <View style={styles.container}>
         <TopBar />
@@ -106,19 +123,32 @@ class CreateScreen extends React.Component {
           saveText={this.saveText}
           saveDate={this.saveDate}
           saveTime={this.saveTime}
+          date={date}
+          time={time}
+          minAge={minAge}
+          maxAge={maxAge}
         />
-        <FormTwo 
+        <FormTwo
           hidden={twoHidden}
           pickedLocation={pickedLocation}
+          moveMap={this.moveMap}
+          submitEvent={this.submitEvent}
         />
-        <Button 
-          title='Change tab' 
+        <TouchableOpacity
+          style={twoHidden ? styles.nextbutton : styles.prevbutton}
+          title='Change tab'
           onPress={
             this.changeTab
           }
-        />
+        >
+          <Icon
+            style={{ color: '#f57c00' }}
+            name={twoHidden ? 'arrow-circle-right' : 'arrow-circle-left'}
+            size={30}
+          />
+        </TouchableOpacity>
       </View>
-    );
+    )
   }
 }
 
@@ -126,6 +156,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
+  },
+  nextbutton: {
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    marginRight: '15%',
+    marginBottom: '5%',
+    width: '10%',
+    height: '10%',
+    // backgroundColor: '#f57c00',
+    borderRadius: 50,
+  },
+  prevbutton: {
+    alignItems: 'center',
+    marginLeft: '15%',
+    marginBottom: '15%',
+    width: '10%',
+    height: '10%',
+    // backgroundColor: '#f57c00',
+    borderRadius: 50,
   },
 })
 

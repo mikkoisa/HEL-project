@@ -28,8 +28,6 @@ class Map extends React.Component {
 
   render() {
     const { position, events, handleNavigation } = this.props
-
-    console.log(events)
   
     return (
       <View style={styles.container}>
