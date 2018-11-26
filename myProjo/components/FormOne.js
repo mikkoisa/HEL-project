@@ -1,17 +1,20 @@
 import React from 'react'
-import { Text, View, StyleSheet, ScrollView } from 'react-native'
+import { Text, View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome'
 import CustomTextInput from './CustomTextInput'
 import CustomDatePicker from './CustomDatePicker'
 
 const FormOne = (props) => {
-  const { hidden, saveText, saveDate, saveTime,
+  const { hidden, saveText, saveDate, saveTime, changeTab,
     name, shortDescription, description, date, time, minAge, maxAge } = props
   if (hidden) {
     return null
   }
   return (
-    <ScrollView style={styles.form}/* keyboardShouldPersistTaps='always' */>
-      <Text style={styles.title}>Event information</Text>
+    <ScrollView 
+      showsVerticalScrollIndicator={false}
+      style={styles.form}/* keyboardShouldPersistTaps='always' */
+    >
       <CustomTextInput
         title='Event name'
         placeholder='Event name'
@@ -29,6 +32,7 @@ const FormOne = (props) => {
         value={shortDescription}
       />
       <CustomTextInput
+        styleLabel={{ top: '12%' }}
         title='Description'
         placeholder='Event Description'
         saveText={saveText}
@@ -45,12 +49,12 @@ const FormOne = (props) => {
         title='Date'
         saveDate={saveDate}
         saveTime={saveTime}
-        multiline
       />
 
-      <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+      <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'flex-start' }}>
         <CustomTextInput 
-          style={styles.ageInput}
+          style={{ width: 70, justifyContent: 'center', marginVertical: 0, paddingLeft: '27%' }}
+          styleLabel={{ top: '-8%', left: '12%', paddingHorizontal: '12%' }}
           value={minAge}
           title='Age'
           placeholder='Min'
@@ -58,9 +62,10 @@ const FormOne = (props) => {
           keyType='numeric'
           saveText={saveText}
         />
-        <Text style={{ marginHorizontal: 12, marginVertical: 25 }}> - </Text>
+        <Text centerText='true' style={{ marginVertical: '5%', marginRight: '3%' }}> - </Text>
         <CustomTextInput
-          style={styles.ageInput}
+          style={{ width: 70, justifyContent: 'center', marginVertical: 0, paddingLeft: '26%' }}
+          styleLabel={{ width: 0 }}
           // title='Max age'
           value={maxAge}
           placeholder='Max'
@@ -69,24 +74,40 @@ const FormOne = (props) => {
           saveText={saveText}
         />
       </View>
+      <TouchableOpacity
+        style={styles.nextbutton}
+        title='Change tab'
+        onPress={
+          changeTab
+        }
+      >
+        <Icon
+          style={{ color: '#f57c00' }}
+          name='arrow-circle-right'
+          size={30}
+        />
+      </TouchableOpacity>
 
     </ScrollView>
   ) 
 }
 
 const styles = StyleSheet.create({
-  ageInput: {
-    width: 70,
-  },
-  title: {
-    paddingBottom: '5%',
-    fontSize: 16,
-    fontFamily: 'sans-serif',
-    color: '#00000087',
-  },
   form: {
+    paddingTop: '2%',
+    paddingBottom: '15%',
     paddingHorizontal: '15%',
-    paddingTop: '10%',
+  },
+  nextbutton: {
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    // marginRight: '15%',
+    //  marginBottom: '5%',
+    width: '11%',
+    height: '11%',
+    // backgroundColor: '#f57c00',
+    paddingBottom: '10%',
+    borderRadius: 50,
   },
 })
 

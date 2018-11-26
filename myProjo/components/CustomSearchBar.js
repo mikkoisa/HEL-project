@@ -143,9 +143,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#00000040',
     borderRadius: 3,
-    paddingLeft: 7,
-    paddingVertical: 5,
-    marginVertical: 15,
+    paddingRight: '3%',
+    // paddingVertical: '5%',
+    marginVertical: '5%',
   },
   textFieldFocused: {
     // height: 40,

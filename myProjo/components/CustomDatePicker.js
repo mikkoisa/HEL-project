@@ -68,8 +68,9 @@ class CustomDatePicker extends React.Component {
   render() {
     const { dateFocused, timeFocused } = this.state
     const { date, time } = this.props
-    time.hour = (`0${time.hour}`).slice(-2);
-    time.minute = (`0${time.minute}`).slice(-2);
+    time.hour = (`0${time.hour}`).slice(-2)
+    time.minute = (`0${time.minute}`).slice(-2)
+    date.year = (`${date.year}`).slice(-2)
     return (
       <View style={styles.container}>
         <View style={dateFocused ? styles.textFieldFocused : styles.textField}>
@@ -140,7 +141,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     // borderBottomColor: '#00000040',
     // borderBottomWidth: 1,
-    // marginBottom: 5,
+    // marginBottom: '4%',
   },
   textField: {
     // backgroundColor: '#00000012',
@@ -149,11 +150,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#00000040',
     borderRadius: 3,
-    paddingLeft: 7,
-    paddingRight: 10,
-    paddingVertical: 5,
-    marginVertical: 15,
-    justifyContent: 'center',
+    paddingHorizontal: '3%',
+    paddingVertical: '2%',
+    marginVertical: '6%',
   },
   textFieldFocused: {
     // height: 40,
@@ -161,35 +160,31 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#f57c00',
     borderRadius: 3,
-    paddingLeft: 7,
-    paddingRight: 10,
-    paddingVertical: 5,
-    marginVertical: 15,
-    justifyContent: 'center',
+    paddingHorizontal: '3%',
+    paddingVertical: '2%',
+    marginVertical: '6%',
   },
   content: {
     color: '#00000040',
-    paddingVertical: 5,
-    paddingRight: 15,
-    paddingLeft: 5,
+    padding: '6%',
   },
   icon: {
     color: '#00000087',
-    padding: 6,
+    padding: '6%',
   },
   label: {
     position: 'absolute',
     alignItems: 'center',
-    top: 5,
-    left: 12,
+    top: '7%',
+    left: '3%',
     backgroundColor: '#ffffff',
     paddingHorizontal: 10,
   },
   labelRight: {
     position: 'absolute',
     alignItems: 'center',
-    top: 5,
-    right: 70,
+    top: '7%',
+    right: '22%',
     backgroundColor: '#ffffff',
     paddingHorizontal: 10,
   },

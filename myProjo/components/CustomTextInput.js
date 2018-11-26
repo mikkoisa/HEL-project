@@ -18,13 +18,14 @@ class CustomTextInput extends React.Component {
   }
 
   render() {
-    const { saveText, title, placeholder, multiline, lines, id, value, style, keyType } = this.props
+    const { saveText, title, placeholder, multiline, 
+      lines, id, value, style, styleLabel, keyType } = this.props
     const { focused } = this.state
     return (
       <View>
         <View style={[focused ? styles.textFieldFocused : styles.textField, style]}>
           <TextInput
-            style={{ color: '#00000087' }}
+            style={{ color: '#00000087', width: '100%' }}
             keyboardType={keyType}
             value={value}
             placeholder={placeholder}
@@ -36,7 +37,7 @@ class CustomTextInput extends React.Component {
             onChangeText={text => saveText(id, text)}
           />
         </View>
-        <View style={styles.label}>
+        <View style={[styles.label, styleLabel]}>
           <Text 
             style={focused ? styles.labelTextFocused : styles.labelText}
           >
@@ -55,26 +56,26 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#00000040',
     borderRadius: 3,
-    paddingHorizontal: '%',
-    paddingVertical: 5,
-    marginVertical: 15,
+    paddingHorizontal: '3%',
+    paddingVertical: '2%',
+    marginTop: '9%',
   },
   textFieldFocused: {
     // height: 40,
     borderWidth: 1,
     borderColor: '#f57c00',
     borderRadius: 3,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    marginVertical: 15,
+    paddingHorizontal: '3%',
+    paddingVertical: '2%',
+    marginTop: '9%',
   },
   label: {
     position: 'absolute',
     alignItems: 'center',
-    top: 5,
-    left: 10,
+    top: '20%',
+    left: '3%',
     backgroundColor: '#ffffff',
-    paddingHorizontal: 10,
+    paddingHorizontal: '5%',
   },
   labelText: {
     color: '#00000060',
