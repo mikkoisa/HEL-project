@@ -8,14 +8,27 @@ export default (url, bodyData) => {
     ApiKey: 'M4940gwq7zkoY7lT5Vd6',
   }
 
+  console.log('DOES IT GO HERE')
+  const bodyString = JSON.stringify(bodyData)
+
   const data = {
-    headers,
-    body: JSON.stringify(bodyData),
+    ...headers,
+    body: bodyData,
   }
 
-  return fetch(url, data)
+  console.log(data)
+  console.log(url)
+
+  return fetch(url, { 
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: bodyString,
+  })
     .then((response) => {
-      // console.log(response)
+      console.log(response)
       if (response.status >= 400) {
         console.log(`Fetch error: ${response.status}`)
         Promise.reject(null, response.status)

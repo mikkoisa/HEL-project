@@ -19,12 +19,7 @@ class CreateScreen extends React.Component {
       maxAge: '',
       date: { year: '00', month: '00', day: '00' },
       time: { hour: '00', minute: '00' },
-<<<<<<< HEAD
-      pickedLocation: { latitude: 60.1695291, longitude: 24.9383613 },
-      
-=======
       pickedLocation: { lat: 60.1695291, lng: 24.9383613 },
->>>>>>> 02a696abc61636e6a82f13f25596cb0c12e921c7
 
       // latText: null,
       // lngText: null,
@@ -59,6 +54,8 @@ class CreateScreen extends React.Component {
         fi: 'Mannerheimintie 14',
       },
     }
+
+    console.log(mockData)
     // Posting first only location data. 
     PostData(ApiUrls.postLocation, mockData)
       .then((result) => {
