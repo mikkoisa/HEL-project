@@ -11,10 +11,12 @@ class CustomSearchBar extends React.Component {
   }
 
   onFocus = () => {
+    console.log('on focus called')
     this.setState({ focused: true })
   }
 
   unFocus = () => {
+    console.log('unfocus called')
     this.setState({ focused: false })
   }
 
@@ -94,6 +96,7 @@ class CustomSearchBar extends React.Component {
               fetchDetails
               // renderDescription={row => row.description} // custom description render
               onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
+                console.log('onpress called')  
                 console.log(details.geometry.location)
                 // this.setState({ pickedLocation: details.geometry.location })
                 moveMap(details.geometry.location)
@@ -107,7 +110,7 @@ class CustomSearchBar extends React.Component {
                 location: '60.1695291,24.9383613',
                 radius: 500,
                 // available options: https://developers.google.com/places/web-service/autocomplete
-                key: 'API KEY',
+                key: 'AIzaSyBvVHjeYM1pIWZmw7fhQefoalEzCFOrGhg',
               // language: 'en', // language of the results
               // types: '(geocode)', // default: 'geocode'
               }}

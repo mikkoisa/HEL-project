@@ -13,7 +13,8 @@ const FormTwo = (props) => {
   return (
     <ScrollView 
       showsVerticalScrollIndicator={false}
-      style={styles.form}/* keyboardShouldPersistTaps='always' */
+      style={styles.form} 
+      keyboardShouldPersistTaps='always'
     >
       <CustomSearchBar
         title='Location'

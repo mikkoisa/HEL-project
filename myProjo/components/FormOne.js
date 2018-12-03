@@ -1,19 +1,21 @@
 import React from 'react'
-import { Text, View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
+import { StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import CustomTextInput from './CustomTextInput'
 import CustomDatePicker from './CustomDatePicker'
+import CusomAgeInput from './CustomAgeInput'
 
 const FormOne = (props) => {
   const { hidden, saveText, saveDate, saveTime, changeTab,
-    name, shortDescription, description, date, time, minAge, maxAge } = props
+    formData } = props
   if (hidden) {
     return null
   }
   return (
     <ScrollView 
       showsVerticalScrollIndicator={false}
-      style={styles.form}/* keyboardShouldPersistTaps='always' */
+      style={styles.form} 
+      keyboardShouldPersistTaps='always'
     >
       <CustomTextInput
         title='Event name'
@@ -21,7 +23,8 @@ const FormOne = (props) => {
         saveText={saveText}
         id='name'
         keyType='default'
-        value={name}
+        value={formData.name}
+        error={formData.nameError}
       />
       <CustomTextInput
         title='Short description'
@@ -29,51 +32,37 @@ const FormOne = (props) => {
         saveText={saveText}
         id='shortDescription'
         keyType='default'
-        value={shortDescription}
+        value={formData.shortDescription}
+        error={formData.shortError}
       />
       <CustomTextInput
-        styleLabel={{ top: '12%' }}
+        styleLabel={{ top: 1 }}
         title='Description'
         placeholder='Event Description'
         saveText={saveText}
         multiline
-        lines={4}
+        lines={3}
         id='description'
         keyType='default'
-        value={description}
+        value={formData.description}
+        error={formData.descError}
       />
       
       <CustomDatePicker
-        date={date}
-        time={time}
+        date={formData.date}
+        time={formData.time}
         title='Date'
         saveDate={saveDate}
         saveTime={saveTime}
+        errorDate={formData.dateError}
+        errorTime={formData.timeError}
       />
-
-      <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'flex-start' }}>
-        <CustomTextInput 
-          style={{ width: 70, justifyContent: 'center', marginVertical: 0, paddingLeft: '27%' }}
-          styleLabel={{ top: '-8%', left: '12%', paddingHorizontal: '12%' }}
-          value={minAge}
-          title='Age'
-          placeholder='Min'
-          id='minAge'
-          keyType='numeric'
-          saveText={saveText}
-        />
-        <Text centerText='true' style={{ marginVertical: '5%', marginRight: '3%' }}> - </Text>
-        <CustomTextInput
-          style={{ width: 70, justifyContent: 'center', marginVertical: 0, paddingLeft: '26%' }}
-          styleLabel={{ width: 0 }}
-          // title='Max age'
-          value={maxAge}
-          placeholder='Max'
-          id='maxAge'
-          keyType='numeric'
-          saveText={saveText}
-        />
-      </View>
+      <CusomAgeInput
+        saveText={saveText}
+        valueMin={formData.minAge}
+        valueMax={formData.maxAge}
+        error={formData.ageError}
+      />
       <TouchableOpacity
         style={styles.nextbutton}
         title='Change tab'
@@ -95,7 +84,7 @@ const FormOne = (props) => {
 const styles = StyleSheet.create({
   form: {
     paddingTop: '2%',
-    paddingBottom: '15%',
+    paddingBottom: '5%',
     paddingHorizontal: '15%',
   },
   nextbutton: {

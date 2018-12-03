@@ -2,6 +2,7 @@ import React from 'react'
 // import PropTypes from 'prop-types'
 import { FlatList, StyleSheet, View, ActivityIndicator } from 'react-native'
 import Modal from 'react-native-modal'
+import { NavigationEvents } from 'react-navigation'
 import EventListItem from './EventListItem'
 import EventDetails from './EventDetails'
 
@@ -32,12 +33,18 @@ class EventList extends React.Component {
   
 
   render() {
-    const { events, handleNavigation, isLoading } = this.props
+    const { events, handleNavigation, isLoading, refresh } = this.props
     const { modalVisible, clickedEvent } = this.state
 
 
     return (
       <View style={styles.container}>
+        <NavigationEvents
+          onWillFocus={() => {
+            refresh()
+          }
+        }
+        />
         <View style={styles.loader}>
           <ActivityIndicator animating={isLoading} size={70} color="#f57c00" />
         </View>

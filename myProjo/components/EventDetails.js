@@ -41,11 +41,6 @@ class EventDetails extends React.Component {
             value={event.description[Object.keys(event.description)[0]]} 
             style={styles.textfield} 
           />
-          <Text style={styles.textfield}>
-            {event.location.name[Object.keys(event.location.name)[0]]}
-            {'\n'}
-            {event.location.street_address[Object.keys(event.location.street_address)[0]]}
-          </Text>
         </ScrollView>
         <View style={styles.bottom}>
           <TouchableOpacity

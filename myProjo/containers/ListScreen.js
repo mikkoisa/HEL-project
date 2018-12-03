@@ -22,6 +22,9 @@ class ListScreen extends React.Component {
   }
 
   getEventList = () => {
+    this.setState({
+      isLoading: true,
+    })
     fetchGetJSON(`${apiUrls.baseEventApiUrl}${apiUrls.helsinkiToday}`)
       .then((result) => {
         console.log(result.data)
@@ -53,6 +56,7 @@ class ListScreen extends React.Component {
       <EventList
         isLoading={isLoading}
         handleNavigation={this.handleNavigation}
+        refresh={this.getEventList}
         events={events}
       />
     ) 

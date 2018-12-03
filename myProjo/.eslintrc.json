@@ -16,6 +16,7 @@
         "linebreak-style": 0
     },
     "globals": {
-        "navigator": true
+        "navigator": true,
+        "fetch": true
       }
 }

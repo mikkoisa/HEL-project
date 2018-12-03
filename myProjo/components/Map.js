@@ -1,7 +1,8 @@
 import React from 'react'
 import MapView, { Marker } from 'react-native-maps';
-import { View, StyleSheet, StatusBar } from 'react-native';
+import { View, StyleSheet, StatusBar, Alert } from 'react-native';
 import PropTypes from 'prop-types'
+import { NavigationEvents } from 'react-navigation'
 // import Modal from 'react-native-modal'
 // import EventDetails from './EventDetails'
 import userMarker from '../assets/userMarker.png'
@@ -27,10 +28,36 @@ class Map extends React.Component {
   } */
 
   render() {
-    const { position, events, handleNavigation } = this.props
+    console.log('rendering')
+    const { position, events, handleNavigation, refresh } = this.props
+
+    for (let i = 0; i < events.length; i += 1) {
+      console.log(events[i])
+      if (events[i].custom_data) {
+        events[i].location.position.coordinates[0] = parseFloat(events[i].custom_data.lng)
+        events[i].location.position.coordinates[1] = parseFloat(events[i].custom_data.lat)
+      } else {
+        console.log('heiii')
+      }
+    }
   
     return (
       <View style={styles.container}>
+        <NavigationEvents
+          onWillFocus={(payload) => {
+            if (payload.action.params) {
+              Alert.alert(
+                'Success',
+                'Event created succesfully!',
+                [
+                  { text: 'OK', onPress: () => console.log('OK Pressed') },
+                ],
+                { cancelable: false },
+              )
+              refresh()
+            }
+          }}
+        />
         <StatusBar hidden />
         <MapView
           loadingEnabled
@@ -47,12 +74,12 @@ class Map extends React.Component {
             // This will iterate trhrough the events and display them as markers
             <Marker
               key={event.id}
-              coordinate={{ 
+              coordinate={{
                 latitude: event.location.position.coordinates[1],
                 longitude: event.location.position.coordinates[0], 
               }} 
               title={event.name[Object.keys(event.name)[0]]}
-              description={event.location.name[Object.keys(event.location.name)[0]]}
+              // description={event.location.name[Object.keys(event.location.name)[0]]}
               image={soccerBall}
               onCalloutPress={() => {
                 // this.setModalVisible(true, event)

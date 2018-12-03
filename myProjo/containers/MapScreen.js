@@ -26,12 +26,13 @@ class MapScreen extends React.Component {
         timestamp: null,
       },
       events: [
-        { location: { position: { coordinates: [60.1695291, 24.9383613] }, name: { fi: 'sijainnin nimi' } }, name: { fi: 'suomalainen' }, short_description: { fi: 'lyhyt kuvaus' }, id: '5' },
+        { location: { position: { coordinates: [60.1695291, 24.9383613] }, name: { fi: 'sijainnin nimi' } }, name: { fi: 'suomalainen' }, short_description: { fi: 'lyhyt kuvaus' }, id: '5', custom_data: { lat: 60.1695291, lng: 24.9383613 } },
       ],
     };
   }
 
   componentDidMount() {
+    console.log('component mounted')
     // console.log(baseEventApiUrl)
     this.getInitialLocation()
     // this.followLocation()
@@ -46,7 +47,7 @@ class MapScreen extends React.Component {
   getEventList = () => {
     fetchGetJSON(`${apiUrls.baseEventApiUrl}${apiUrls.helsinkiToday}`)
       .then((result) => {
-        // console.log(result.data)
+        console.log(result.data)
         this.setState({
           events: result.data,
           isLoading: false,
@@ -86,7 +87,7 @@ class MapScreen extends React.Component {
   }
 
   render() {
-    // console.log(this.props)
+    console.log(this.props)
     const { position, events, isLoading } = this.state
     return (
       <Map
@@ -94,6 +95,7 @@ class MapScreen extends React.Component {
         handleNavigation={this.handleNavigation}
         position={position}
         events={events}
+        refresh={this.getEventList}
       />
     );
   }
