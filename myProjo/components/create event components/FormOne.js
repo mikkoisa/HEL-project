@@ -1,9 +1,9 @@
 import React from 'react'
 import { StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import CustomTextInput from './CustomTextInput'
-import CustomDatePicker from './CustomDatePicker'
-import CusomAgeInput from './CustomAgeInput'
+import CustomTextInput from './custom components/CustomTextInput'
+import CustomDatePicker from './custom components/CustomDatePicker'
+import CusomAgeInput from './custom components/CustomAgeInput'
 
 const FormOne = (props) => {
   const { hidden, saveText, saveDate, saveTime, changeTab,

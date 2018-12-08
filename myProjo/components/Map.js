@@ -3,9 +3,10 @@ import MapView, { Marker } from 'react-native-maps';
 import { View, StyleSheet, StatusBar, Alert } from 'react-native';
 import PropTypes from 'prop-types'
 import { NavigationEvents } from 'react-navigation'
+import TopBar from './TopBar'
 // import Modal from 'react-native-modal'
 // import EventDetails from './EventDetails'
-import userMarker from '../assets/userMarker.png'
+// import userMarker from '../assets/userMarker.png'
 import soccerBall from '../assets/soccerBall.png'
 
 
@@ -14,6 +15,7 @@ class Map extends React.Component {
     super(props);
 
     this.state = {
+      statusBarHeight: 1,
       // modalVisible: false,
       /* clickedEvent: { 
         latlng: { latitude: 60.1695291, longitude: 24.9383613 }, 
@@ -26,10 +28,14 @@ class Map extends React.Component {
     this.setState({ clickedEvent })
     this.setState({ modalVisible: visible })
   } */
+  componentWillMount() {
+    // Hack to ensure the showsMyLocationButton is shown initially. Idea is to force a repaint
+    setTimeout(() => this.setState({ statusBarHeight: 0 }), 500);
+  }
 
   render() {
     console.log('rendering')
-    const { position, events, handleNavigation, refresh } = this.props
+    const { position, events, /* ownEvents, */ handleNavigation, refresh } = this.props
 
     for (let i = 0; i < events.length; i += 1) {
       console.log(events[i])
@@ -42,7 +48,7 @@ class Map extends React.Component {
     }
   
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { paddingTop: this.state.statusBarHeight }]}>
         <NavigationEvents
           onWillFocus={(payload) => {
             if (payload.action.params) {
@@ -59,13 +65,14 @@ class Map extends React.Component {
           }}
         />
         <StatusBar hidden />
+        <TopBar handleNavigation={handleNavigation} />
         <MapView
-          loadingEnabled
+          // loadingEnabled
           showsUserLocation
           showsMyLocationButton
           style={styles.container}
-          // initialRegion={initialRegion}
-          region={position.coords}
+          initialRegion={position.coords}
+          // region={position.coords}
           /* onRegionChangeComplete={(region) => {
             this.setNewInitialRegion(region)
           }} */
@@ -87,10 +94,6 @@ class Map extends React.Component {
               }}
             />
           ))}
-          <Marker // This is the marker for the user's location
-            image={userMarker}
-            coordinate={position.coords}
-          />
         </MapView>
       </View>
     )

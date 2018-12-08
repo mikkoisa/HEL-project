@@ -20,6 +20,10 @@ class CustomSearchBar extends React.Component {
     this.setState({ focused: false })
   }
 
+  componentWillUnmount = () => {
+    console.log('unmounting!!!!!!!')
+  }
+
   render() {
     const { title, moveMap } = this.props
     const { focused } = this.state
@@ -61,34 +65,32 @@ class CustomSearchBar extends React.Component {
                 marginTop: 0,
               },
             }} */
-              styles={{
-                container: {
-                  
+              styles={{ 
+                container: {  
                 },
                 textInputContainer: {
                   backgroundColor: 'rgba(0,0,0,0)',
                   borderTopWidth: 0,
                   borderBottomWidth: 0,
-                  
+                
                   width: '100%',
-                  
+                
                 },
                 description: {
-                  // fontWeight: 'bold',
+                // fontWeight: 'bold',
                 },
                 predefinedPlacesDescription: {
                   color: '#1faadb',
                 },
                 textInput: {
-                  // flex: 1,
-                  // justifyContent: 'flex-start',
-                  
+                // flex: 1,
+                // justifyContent: 'flex-start',
                 },
               }}
               autoFocus={false}
               // underlineColorAndroid='transparent'
               // multiline={multiline}
-              onFocus={this.onFocus}
+              
               onBlur={this.unFocus}
               // onChangeText={text => saveText(text)}
               returnKeyType="search" // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype
@@ -96,10 +98,8 @@ class CustomSearchBar extends React.Component {
               fetchDetails
               // renderDescription={row => row.description} // custom description render
               onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
-                console.log('onpress called')  
-                console.log(details.geometry.location)
                 // this.setState({ pickedLocation: details.geometry.location })
-                moveMap(details.geometry.location)
+                moveMap(details.geometry.location, 'newLocation')
               }}
 
               minLength={2} // minimum length of text to search
@@ -120,7 +120,7 @@ class CustomSearchBar extends React.Component {
                 types: 'sport',
               }}
 
-              debounce={200}
+              debounce={0}
               // renderRightButton={() => <Text>Custom text after the input</Text>}
             />
             
@@ -140,6 +140,8 @@ class CustomSearchBar extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  searchBar: {
+  },
   textField: {
     // backgroundColor: '#00000012',
     // height: 40,

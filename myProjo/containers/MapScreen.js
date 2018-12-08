@@ -1,6 +1,9 @@
 import React from 'react'
 import Map from '../components/Map'
 import fetchGetJSON from '../util/FetchGetJSON'
+import asyncGetData from '../util/AsyncStorageGetData'
+import asyncSaveData from '../util/AsyncStorageSaveData'
+import Loader from '../components/Loader'
 import apiUrls from '../constants/config'
 
 
@@ -9,7 +12,8 @@ class MapScreen extends React.Component {
     super(props);
 
     this.state = {  
-      isLoading: true,
+      eventsLoading: true,
+      ownEventsLoading: true,
       // Set default position
       position: {
         coords: {
@@ -28,20 +32,40 @@ class MapScreen extends React.Component {
       events: [
         { location: { position: { coordinates: [60.1695291, 24.9383613] }, name: { fi: 'sijainnin nimi' } }, name: { fi: 'suomalainen' }, short_description: { fi: 'lyhyt kuvaus' }, id: '5', custom_data: { lat: 60.1695291, lng: 24.9383613 } },
       ],
+      ownEvents: null,
     };
   }
 
   componentDidMount() {
     console.log('component mounted')
-    // console.log(baseEventApiUrl)
     this.getInitialLocation()
     // this.followLocation()
-    this.getEventList()
+    this.getData()
   }
 
   handleNavigation = (routeName, event) => {
     const { navigation } = this.props
-    navigation.navigate(routeName, event)
+    // const { ownEvents } = this.state
+    const joined = this.checkDuplicate(event)
+    
+    /* if (event) {
+      for (let i = 0; i < ownEvents.length; i++) {
+        if (ownEvents[i].id === event.id) {
+          joined = true
+          break
+        }
+        console.log('not duplicate')
+      }
+    } */
+
+
+    navigation.navigate(routeName, { storeOwnEvent: this.storeOwnEvent, event, joined })
+  }
+
+  getData = () => {
+    console.log('updating map data')
+    this.getEventList()
+    this.getOwnEvents()
   }
 
   getEventList = () => {
@@ -50,9 +74,60 @@ class MapScreen extends React.Component {
         console.log(result.data)
         this.setState({
           events: result.data,
-          isLoading: false,
+          eventsLoading: false,
         })
       })
+  }
+
+  getOwnEvents = () => {
+    asyncGetData()
+      .then((result) => {
+        console.log('got from async: ', JSON.parse(result))
+        if (result) {
+          this.setState({
+            ownEvents: JSON.parse(result),
+            ownEventsLoading: false,
+          })
+        } else {
+          this.setState({
+            ownEvents: {},
+            ownEventsLoading: false,
+          })
+        }   
+      })
+  }
+
+  storeOwnEvent = (event) => {
+    const { ownEvents } = this.state
+    let data = ownEvents
+
+    if (!this.checkDuplicate(event)) {
+      // data.push(ownEvents)
+      data.push(event)
+    } else {
+      data = data.filter(obj => obj.id !== event.id);
+    }    
+    asyncSaveData(data)
+      .then((result) => {
+        console.log(result)
+        if (result === 'success') {
+          this.getOwnEvents()
+        }
+      })
+  }
+
+  checkDuplicate = (event) => {
+    const { ownEvents } = this.state
+    if (event) {
+      for (let i = 0; i < ownEvents.length; i += 1) {
+        if (ownEvents[i].id === event.id) {
+          console.log('is in own events')
+          return true
+        }
+      }
+    }
+    console.log('not in own events')
+    return false
   }
   
   getInitialLocation = () => {
@@ -87,17 +162,21 @@ class MapScreen extends React.Component {
   }
 
   render() {
-    console.log(this.props)
-    const { position, events, isLoading } = this.state
+    const { position, events, eventsLoading, ownEventsLoading, ownEvents } = this.state
+    if (!eventsLoading && !ownEventsLoading) {
+      return (
+        <Map
+          handleNavigation={this.handleNavigation}
+          position={position}
+          events={events}
+          ownEvents={ownEvents}
+          refresh={this.getData}
+        />
+      )
+    } 
     return (
-      <Map
-        isLoading={isLoading}
-        handleNavigation={this.handleNavigation}
-        position={position}
-        events={events}
-        refresh={this.getEventList}
-      />
-    );
+      <Loader />
+    )
   }
 }
 

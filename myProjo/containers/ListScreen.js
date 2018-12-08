@@ -1,7 +1,10 @@
 import React from 'react'
-import EventList from '../components/EventList'
+import EventList from '../components/event list components/EventList'
+import asyncGetData from '../util/AsyncStorageGetData'
+import asyncSaveData from '../util/AsyncStorageSaveData'
 import fetchGetJSON from '../util/FetchGetJSON'
 import apiUrls from '../constants/config'
+import Loader from '../components/Loader'
 
 class ListScreen extends React.Component {
   constructor(props) {
@@ -9,16 +12,72 @@ class ListScreen extends React.Component {
     this.state = {
       events: null,
       isLoading: true,
+      ownEventsLoading: true,
+      ownEvents: null,
     }
   }
 
   componentDidMount() {
     this.getEventList()
+    this.getOwnEvents()
   }
 
   handleNavigation = (routeName, event) => {
     const { navigation } = this.props
-    navigation.navigate(routeName, event)
+    const joined = this.checkDuplicate(event)
+
+    navigation.navigate(routeName, { storeOwnEvent: this.storeOwnEvent, event, joined })
+  }
+
+  getOwnEvents = () => {
+    asyncGetData()
+      .then((result) => {
+        console.log('got from async: ', JSON.parse(result))
+        if (result) {
+          this.setState({
+            ownEvents: JSON.parse(result),
+            ownEventsLoading: false,
+          })
+        } else {
+          this.setState({
+            ownEvents: {},
+            ownEventsLoading: false,
+          })
+        }   
+      })
+  }
+
+  storeOwnEvent = (event, joined) => {
+    const { ownEvents } = this.state
+    let data = ownEvents
+
+    if (!joined) {
+      // data.push(ownEvents)
+      data.push(event)
+    } else {
+      data = data.filter(obj => obj.id !== event.id);
+    }    
+    asyncSaveData(data)
+      .then((result) => {
+        console.log(result)
+        if (result === 'success') {
+          this.getOwnEvents()
+        }
+      })
+  }
+
+  checkDuplicate = (event) => {
+    const { ownEvents } = this.state
+    if (event) {
+      for (let i = 0; i < ownEvents.length; i += 1) {
+        if (ownEvents[i].id === event.id) {
+          console.log('is in own events')
+          return true
+        }
+      }
+    }
+    console.log('not in own events')
+    return false
   }
 
   getEventList = () => {
@@ -51,15 +110,20 @@ class ListScreen extends React.Component {
   }
 
   render() {
-    const { events, isLoading } = this.state 
+    const { events, isLoading, ownEventsLoading } = this.state 
+    if (!ownEventsLoading && !isLoading) {
+      return (
+        <EventList
+          isLoading={isLoading}
+          handleNavigation={this.handleNavigation}
+          refresh={this.getEventList}
+          events={events}
+        />
+      )
+    } 
     return (
-      <EventList
-        isLoading={isLoading}
-        handleNavigation={this.handleNavigation}
-        refresh={this.getEventList}
-        events={events}
-      />
-    ) 
+      <Loader />
+    )
   }
 }
 

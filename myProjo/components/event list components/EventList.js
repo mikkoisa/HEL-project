@@ -1,17 +1,17 @@
 import React from 'react'
 // import PropTypes from 'prop-types'
-import { FlatList, StyleSheet, View, ActivityIndicator } from 'react-native'
-import Modal from 'react-native-modal'
+import { FlatList, StyleSheet, View } from 'react-native'
 import { NavigationEvents } from 'react-navigation'
+import TopBar from '../TopBar'
 import EventListItem from './EventListItem'
-import EventDetails from './EventDetails'
+import EventDetails from '../EventDetails'
 
 class EventList extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      modalVisible: false,
+      /* modalVisible: false,
       clickedEvent: { 
         images: { 0: 'https://api.hel.fi/linkedevents/media/images/Talvisirkus_Rakkaus_1kuva_.jpg' }, 
         name: { fi: 'Testevent' },
@@ -19,7 +19,7 @@ class EventList extends React.Component {
         description: { fi: 'Description' }, 
         locName: { fi: 'Location name' }, 
         locAddress: { fi: 'location address' }, 
-      },
+      }, */
     }
   }
 
@@ -33,9 +33,9 @@ class EventList extends React.Component {
   
 
   render() {
-    const { events, handleNavigation, isLoading, refresh } = this.props
-    const { modalVisible, clickedEvent } = this.state
-
+    const { events, handleNavigation, refresh } = this.props
+    // const { modalVisible, clickedEvent } = this.state
+    console.log(events)
 
     return (
       <View style={styles.container}>
@@ -45,9 +45,7 @@ class EventList extends React.Component {
           }
         }
         />
-        <View style={styles.loader}>
-          <ActivityIndicator animating={isLoading} size={70} color="#f57c00" />
-        </View>
+        <TopBar handleNavigation={handleNavigation} />
         <FlatList
           data={events}
           // onScrollBeginDrag={() => this.onSwipeUp()}
@@ -60,25 +58,6 @@ class EventList extends React.Component {
           )}
           keyExtractor={event => `${event.id}`}
         />
-
-        <Modal // Modal containing the details of the event
-          animationType='slide'
-          // transparent
-          backdropColor='black'
-          backdropOpacity={0.70}
-          visible={modalVisible}
-          onBackdropPress={() => {
-            this.setModalVisible(false)
-          }}
-          onRequestClose={() => {
-            this.setModalVisible(false)
-          }}
-        >
-          <EventDetails
-            modalVisible={modalVisible}
-            event={clickedEvent}
-          />
-        </Modal>
       </View>
     )
   }
@@ -92,11 +71,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-  },
-  loader: {
-    position: 'absolute',
-    marginHorizontal: '50%',
-    height: 50,
   },
 })
 

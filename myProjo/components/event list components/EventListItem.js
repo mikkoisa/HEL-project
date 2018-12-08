@@ -4,8 +4,13 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 
 const EventListItem = (props) => {
   const { onHandlePress, item } = props
+  let source = null
+  console.log(item)
+
   if (!item.images[0]) {
-    item.images = [{ url: 'https://images.pexels.com/photos/39562/the-ball-stadion-football-the-pitch-39562.jpeg?cs=srgb&dl=ball-football-game-39562.jpg&fm=jpg' }]
+    source = require('../../assets/ball-football-game-39562.jpg') // eslint-disable-line global-require
+  } else {
+    source = { uri: item.images[0].url }
   }
   console.log(item.images)
 
@@ -19,7 +24,7 @@ const EventListItem = (props) => {
       <View style={styles.imageContainer}>
         <Image 
           style={styles.image}
-          source={{ uri: item.images[0].url }}
+          source={source}
         />
       </View>
       <View style={styles.textContainer}>

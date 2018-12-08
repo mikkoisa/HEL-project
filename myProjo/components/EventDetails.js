@@ -4,15 +4,28 @@ import { Text, View, ScrollView, StyleSheet, TouchableOpacity, Image } from 'rea
 import HTMLView from 'react-native-htmlview'
 // import football from '../assets/ball-football-game-39562.jpg'
 
-class EventDetails extends React.Component {
+class EventDetails extends React.Component {  
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      localJoined: null,
+    }
+  }
+
   render() {
-    // const { event } = this.props
-    const event = this.props.navigation.state.params
+    console.log(this.props.navigation.state)
+    const { event, storeOwnEvent, joined } = this.props.navigation.state.params
+    const { localJoined } = this.state
+    console.log(joined, localJoined)
+    // const event = params.event
+    // const { ownEvents } = event.ownEvents
+    // console.log(ownEvents)
     let source = null
 
-    if (!event.location.street_address) {
+    /* if (!event.location.street_address) {
       event.location.street_address = { test: 'test' }
-    } 
+    } */
     
     if (!event.images[0]) {
       source = require('../assets/ball-football-game-39562.jpg') // eslint-disable-line global-require
@@ -20,8 +33,6 @@ class EventDetails extends React.Component {
     } else {
       source = { uri: event.images[0].url }
     }
-
-    console.log(event)
     
     return (
       <View style={styles.modal}>
@@ -45,15 +56,41 @@ class EventDetails extends React.Component {
         <View style={styles.bottom}>
           <TouchableOpacity
             style={styles.button}
-            onPress={this.onPress}
+            onPress={() => {
+              if (joined) {
+                if (localJoined === null) {
+                  this.setState({ localJoined: false })
+                } else if (localJoined === false) {
+                  this.setState({ localJoined: true })
+                } else if (localJoined === true) {
+                  this.setState({ localJoined: false })
+                }
+              } else if (!joined) {
+                if (localJoined === null) {
+                  this.setState({ localJoined: true })
+                } else if (localJoined === false) {
+                  this.setState({ localJoined: true })
+                } else if (localJoined === true) {
+                  this.setState({ localJoined: false })
+                }
+              }
+            
+              storeOwnEvent(event)
+            }}
           >
             <Text style={styles.buttonText}>
-              JOIN EVENT
+              {
+                joined 
+                  ? localJoined === false ? 'Add to my event list' : 'Remove from my events list'
+                  : localJoined === true ? 'Remove from my events list' : 'Add to my event list' /* eslint no-nested-ternary: 0 */
+              } 
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={this.onPress}
+            onPress={() => {
+              console.log('close pressed')
+            }}
           >
             <Text style={styles.buttonText}>
               CLOSE

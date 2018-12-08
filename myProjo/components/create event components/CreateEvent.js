@@ -2,8 +2,8 @@ import React from 'react'
 import { View, StyleSheet, Text, TouchableWithoutFeedback, Alert } from 'react-native'
 import FormOne from './FormOne'
 import FormTwo from './FormTwo'
-import PostData from '../util/FetchPostJSON'
-import ApiUrls from '../constants/config'
+import PostData from '../../util/FetchPostJSON'
+import ApiUrls from '../../constants/config'
 
 class CreateScreen extends React.Component {
   constructor(props) {
@@ -11,6 +11,8 @@ class CreateScreen extends React.Component {
     this.state = {
       oneHidden: false,
       twoHidden: true,
+
+      newLocation: null,
 
       // Form data
       name: null,
@@ -253,7 +255,7 @@ class CreateScreen extends React.Component {
       this.setState({ pickedLocation: { lat: location.latitude, lng: location.longitude } })
     } else {
       this.setState({ pickedLocation: location })
-    }
+    } 
   }
 
   changeToTabTwo = () => {
@@ -272,9 +274,10 @@ class CreateScreen extends React.Component {
 
 
   render() {
-    const { pickedLocation, oneHidden, twoHidden,
+    const { pickedLocation, newLocation, oneHidden, twoHidden,
       name, shortDescription, description, date, time, minAge, maxAge,
       nameError, shortError, descError, dateError, timeError, ageError } = this.state
+    const { position } = this.props
     return (
       <View style={styles.container}>
         <Text style={styles.pageTitle}>Create Event</Text>
@@ -304,6 +307,8 @@ class CreateScreen extends React.Component {
           changeTab={this.changeToTabTwo}
         />
         <FormTwo
+          position={position}
+          newLocation={newLocation}
           hidden={twoHidden}
           pickedLocation={pickedLocation} 
           moveMap={this.moveMap}
