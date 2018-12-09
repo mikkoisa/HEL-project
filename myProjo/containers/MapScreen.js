@@ -40,30 +40,20 @@ class MapScreen extends React.Component {
     console.log('component mounted')
     this.getInitialLocation()
     // this.followLocation()
-    this.getData()
+    this.refreshContent()
+    // asyncRemoveData()
   }
 
   handleNavigation = (routeName, event) => {
     const { navigation } = this.props
     // const { ownEvents } = this.state
     const joined = this.checkDuplicate(event)
-    
-    /* if (event) {
-      for (let i = 0; i < ownEvents.length; i++) {
-        if (ownEvents[i].id === event.id) {
-          joined = true
-          break
-        }
-        console.log('not duplicate')
-      }
-    } */
-
 
     navigation.navigate(routeName, { storeOwnEvent: this.storeOwnEvent, event, joined })
   }
 
-  getData = () => {
-    console.log('updating map data')
+  refreshContent = () => {
+    console.log('updating events and own events')
     this.getEventList()
     this.getOwnEvents()
   }
@@ -99,11 +89,19 @@ class MapScreen extends React.Component {
 
   storeOwnEvent = (event) => {
     const { ownEvents } = this.state
-    let data = ownEvents
+    let data = null
+
+    if (Object.keys(ownEvents).length !== 0) {
+      data = ownEvents
+    }
 
     if (!this.checkDuplicate(event)) {
       // data.push(ownEvents)
-      data.push(event)
+      if (data) {
+        data.push(event)
+      } else {
+        data = [event]
+      }    
     } else {
       data = data.filter(obj => obj.id !== event.id);
     }    
@@ -170,7 +168,7 @@ class MapScreen extends React.Component {
           position={position}
           events={events}
           ownEvents={ownEvents}
-          refresh={this.getData}
+          refresh={this.refreshContent}
         />
       )
     } 

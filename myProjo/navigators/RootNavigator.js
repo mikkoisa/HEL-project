@@ -91,7 +91,8 @@ const RootNavigator = createMaterialBottomTabNavigator({
 
   List: {
     screen: ListStack,
-    navigationOptions: () => ({
+    navigationOptions: ({ navigation }) => ({
+      tabBarVisible: tabbarVisible(navigation),
       tabBarIcon: ({ tintColor }) => (
         <Icon
           name="list"

@@ -2,15 +2,14 @@
   "expo": {
     "name": "Frebby",
     "version": "1.0.0",
-    "sdkVersion": "27.0.0"
-  },
-
-  "android": {
-    "package": "com.mip.frebby",
-    "config": {
-      "googleMapsApiKey": "AIzaSyBvVHjeYM1pIWZmw7fhQefoalEzCFOrGhg"    
+    "sdkVersion": "27.0.0",
+    "ios": {
+      "bundleIdentifier": "com.mip.frebby"
+    },
+    "android": {
+      "package": "com.mip.frebby"
     }
- },
+  },
 
  "splash": {
   "image": "./assets/soccerBall.png",

@@ -106,7 +106,7 @@ class CreateScreen extends React.Component {
         '@id': 'https://linkedcourses-api.test.hel.ninja/linkedcourses-test/v1/place/tprek:7256/',
       },
       custom_data: { lat: pickedLocation.lat, lng: pickedLocation.lng, locationName: 'Location name' },
-      publication_status: 'draft',
+      publication_status: 'public',
       audience_min_age: minAge,
       audience_max_age: maxAge,
     }

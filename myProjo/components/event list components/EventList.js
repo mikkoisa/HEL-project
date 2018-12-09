@@ -33,15 +33,17 @@ class EventList extends React.Component {
   
 
   render() {
-    const { events, handleNavigation, refresh } = this.props
+    const { events, handleNavigation, refreshList, refreshOwnEvents } = this.props
     // const { modalVisible, clickedEvent } = this.state
     console.log(events)
 
     return (
       <View style={styles.container}>
         <NavigationEvents
-          onWillFocus={() => {
-            refresh()
+          onWillFocus={(payload) => {
+            console.log(' heeeeeeeeeeeeeeeeeeeeiii', payload)
+            refreshList()
+            refreshOwnEvents()
           }
         }
         />

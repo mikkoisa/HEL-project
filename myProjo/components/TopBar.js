@@ -16,7 +16,7 @@ const TopBar = props => (
       <Icon
         name="user"
         color={props.buttonDisabled ? '#9b9b9b' : '#000000'}
-        size={24}
+        size={30}
       />
     </TouchableOpacity>
   </View>
@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: '7%',
   },
   button: { 
-    height: '100%', 
+    height: '100%',
+    width: '10%', 
     alignItems: 'center', 
     justifyContent: 'center',
   },

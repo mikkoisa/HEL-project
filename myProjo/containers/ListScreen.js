@@ -47,13 +47,21 @@ class ListScreen extends React.Component {
       })
   }
 
-  storeOwnEvent = (event, joined) => {
+  storeOwnEvent = (event) => {
     const { ownEvents } = this.state
-    let data = ownEvents
+    let data = null
+    
+    if (Object.keys(ownEvents).length !== 0) {
+      data = ownEvents
+    }
 
-    if (!joined) {
+    if (!this.checkDuplicate(event)) {
       // data.push(ownEvents)
-      data.push(event)
+      if (data) {
+        data.push(event)
+      } else {
+        data = [event]
+      }    
     } else {
       data = data.filter(obj => obj.id !== event.id);
     }    
@@ -82,7 +90,7 @@ class ListScreen extends React.Component {
 
   getEventList = () => {
     this.setState({
-      isLoading: true,
+      // isLoading: true,
     })
     fetchGetJSON(`${apiUrls.baseEventApiUrl}${apiUrls.helsinkiToday}`)
       .then((result) => {
@@ -111,12 +119,13 @@ class ListScreen extends React.Component {
 
   render() {
     const { events, isLoading, ownEventsLoading } = this.state 
-    if (!ownEventsLoading && !isLoading) {
+    if (!isLoading) {
       return (
         <EventList
           isLoading={isLoading}
           handleNavigation={this.handleNavigation}
-          refresh={this.getEventList}
+          refreshList={this.getEventList}
+          refreshOwnEvents={this.getOwnEvents}
           events={events}
         />
       )

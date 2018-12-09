@@ -60,8 +60,8 @@ class Map extends React.Component {
                 ],
                 { cancelable: false },
               )
-              refresh()
             }
+            refresh()
           }}
         />
         <StatusBar hidden />
@@ -71,7 +71,7 @@ class Map extends React.Component {
           showsUserLocation
           showsMyLocationButton
           style={styles.container}
-          initialRegion={position.coords}
+          initialCamera={position.coords}
           // region={position.coords}
           /* onRegionChangeComplete={(region) => {
             this.setNewInitialRegion(region)
