@@ -3,12 +3,11 @@ import MapView, { Marker } from 'react-native-maps';
 import { View, StyleSheet, StatusBar, Alert } from 'react-native';
 import PropTypes from 'prop-types'
 import { NavigationEvents } from 'react-navigation'
-import TopBar from './TopBar'
+// import TopBar from './TopBar'
 // import Modal from 'react-native-modal'
 // import EventDetails from './EventDetails'
 // import userMarker from '../assets/userMarker.png'
-import soccerBall from '../assets/soccerBall.png'
-
+// import place from '../assets/place.png'
 
 class Map extends React.Component {
   constructor(props) {
@@ -36,6 +35,7 @@ class Map extends React.Component {
   render() {
     console.log('rendering')
     const { position, events, /* ownEvents, */ handleNavigation, refresh } = this.props
+    const { mapStyle } = this.state
 
     for (let i = 0; i < events.length; i += 1) {
       console.log(events[i])
@@ -64,14 +64,15 @@ class Map extends React.Component {
             refresh()
           }}
         />
-        <StatusBar hidden />
-        <TopBar handleNavigation={handleNavigation} />
+        {/*  <StatusBar hidden /> */}
+        {/* <TopBar handleNavigation={handleNavigation} /> */}
         <MapView
           // loadingEnabled
           showsUserLocation
           showsMyLocationButton
           style={styles.container}
-          initialCamera={position.coords}
+          initialRegion={position.coords}
+          // customMapStyle={mapStyle}
           // region={position.coords}
           /* onRegionChangeComplete={(region) => {
             this.setNewInitialRegion(region)
@@ -87,7 +88,8 @@ class Map extends React.Component {
               }} 
               title={event.name[Object.keys(event.name)[0]]}
               // description={event.location.name[Object.keys(event.location.name)[0]]}
-              image={soccerBall}
+              // image={place}
+              pinColor='#bb4d00'
               onCalloutPress={() => {
                 // this.setModalVisible(true, event)
                 handleNavigation('Event', event)

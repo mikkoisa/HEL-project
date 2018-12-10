@@ -2,7 +2,6 @@ import React from 'react'
 // import PropTypes from 'prop-types'
 import { FlatList, StyleSheet, View } from 'react-native'
 import { NavigationEvents } from 'react-navigation'
-import TopBar from '../TopBar'
 import EventListItem from './EventListItem'
 import EventDetails from '../EventDetails'
 
@@ -40,14 +39,12 @@ class EventList extends React.Component {
     return (
       <View style={styles.container}>
         <NavigationEvents
-          onWillFocus={(payload) => {
-            console.log(' heeeeeeeeeeeeeeeeeeeeiii', payload)
+          onWillFocus={() => {
             refreshList()
             refreshOwnEvents()
           }
         }
         />
-        <TopBar handleNavigation={handleNavigation} />
         <FlatList
           data={events}
           // onScrollBeginDrag={() => this.onSwipeUp()}

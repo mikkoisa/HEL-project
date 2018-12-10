@@ -1,4 +1,5 @@
 import React from 'react'
+import { TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { createStackNavigator } from 'react-navigation'
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs'
@@ -9,13 +10,31 @@ import CreateScreen from '../containers/CreateScreen'
 import EventDetails from '../components/EventDetails'
 import OwnEventScreen from '../containers/OwnEventsScreen'
 import EventList from '../components/event list components/EventList'
+import TopBar from '../components/TopBar';
 
 const ListStack = createStackNavigator({
   List: {
     screen: ListScreen,
-    navigationOptions: {
-      header: null,
-    },
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: <TopBar />,
+      headerRight: (
+        <TouchableOpacity
+          onPress={navigation.getParam('handleBarNavigation')}
+        >
+          <Icon
+            name="user"
+            color="#000000"
+            size={30}
+          />
+        </TouchableOpacity>
+      ),
+      headerTitleContainerStyle: {
+        paddingLeft: '5%',
+      },
+      headerRightContainerStyle: {
+        marginRight: '3%',
+      },
+    }),
   },
   EventList: {
     screen: EventList,
@@ -34,12 +53,15 @@ const ListStack = createStackNavigator({
     navigationOptions: {
       title: 'Own page',
       headerStyle: {
-        backgroundColor: '#ffffff',
-        // height: '35%',
-        margin: 0,
+        backgroundColor: '#f57c00CC',
+        borderBottomWidth: 1,
+        borderColor: '#00000087',
       },
       headerTitleStyle: {
-        fontWeight: 'bold',
+        fontFamily: 'Roboto',
+        color: '#ffffff',
+      },
+      headerLeftContainerStyle: {
       },
     }, 
   },
@@ -48,9 +70,27 @@ const ListStack = createStackNavigator({
 const MapStack = createStackNavigator({
   Map: {
     screen: MapScreen,
-    navigationOptions: {
-      header: null,
-    }, 
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: <TopBar />,
+      headerRight: (
+        <TouchableOpacity
+          onPress={navigation.getParam('handleBarNavigation')}
+        >
+          <Icon
+            name="user"
+            color="#000000"
+            size={30}
+          />
+        </TouchableOpacity>
+      ),
+      headerTitleContainerStyle: {
+        paddingLeft: '5%',
+      },
+      headerRightContainerStyle: {
+        marginRight: '3%',
+      },
+    }),
+
   },
   Event: {
     screen: EventDetails,
@@ -63,12 +103,15 @@ const MapStack = createStackNavigator({
     navigationOptions: {
       title: 'Own page',
       headerStyle: {
-        backgroundColor: '#ffffff',
-        // height: '35%',
-        margin: 0,
+        backgroundColor: '#ffad42',
+        borderBottomWidth: 1,
+        borderColor: '#00000087',
       },
       headerTitleStyle: {
-        fontWeight: 'bold',
+        fontFamily: 'Roboto',
+        color: '#ffffff',
+      },
+      headerLeftContainerStyle: {
       },
     }, 
   },
@@ -132,7 +175,7 @@ const tabbarVisible = (navigation) => {
 
   let showTabbar = true;
   routes.forEach((route) => {
-    if (route.routeName === 'Own') {
+    if (route.routeName === 'Own' || route.routeName === 'Event') {
       showTabbar = false;
     }
   });

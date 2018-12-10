@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Text, View, ScrollView, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import HTMLView from 'react-native-htmlview'
+import moment from 'moment'
+import 'moment/locale/en-gb'
 // import football from '../assets/ball-football-game-39562.jpg'
 
 class EventDetails extends React.Component {  
@@ -18,9 +20,12 @@ class EventDetails extends React.Component {
     const { event, storeOwnEvent, joined } = this.props.navigation.state.params
     const { localJoined } = this.state
     console.log(joined, localJoined)
+    console.log(event.description[Object.keys(event.description)[0]])
     // const event = params.event
     // const { ownEvents } = event.ownEvents
     // console.log(ownEvents)
+    // moment.locale('en-gb')  
+    console.log(moment(event.start_time).locale('en-gb').format('LLLL'))
     let source = null
 
     /* if (!event.location.street_address) {
@@ -45,15 +50,23 @@ class EventDetails extends React.Component {
             />
           </View>
           <Text style={styles.title}>{event.name[Object.keys(event.name)[0]]}</Text>
+          <Text style={styles.dateTime}>{moment(event.start_time).locale('en-gb').format('LLLL')}</Text>
           <Text style={styles.textfield}>
             {event.short_description[Object.keys(event.short_description)[0]]}
           </Text>
           <HTMLView 
             value={event.description[Object.keys(event.description)[0]]} 
-            style={styles.textfield} 
+            style={styles.description}
+            textComponentProps={{ style: { color: '#00000099', fontSize: 14 } }}
           />
-        </ScrollView>
-        <View style={styles.bottom}>
+          <Text style={[styles.dateTime, { marginTop: '3%' }]}>
+            {'Ages:'}
+          </Text>
+          <Text style={{ marginHorizontal: '8%' }}>
+            {event.audience_min_age}
+            {' - '}
+            {event.audience_max_age}
+          </Text>
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
@@ -81,22 +94,12 @@ class EventDetails extends React.Component {
             <Text style={styles.buttonText}>
               {
                 joined 
-                  ? localJoined === false ? 'Add to my event list' : 'Remove from my events list'
-                  : localJoined === true ? 'Remove from my events list' : 'Add to my event list' /* eslint no-nested-ternary: 0 */
+                  ? localJoined === false ? 'ADD TO MY EVENTS' : 'REMOVE FORM MY EVENTS'
+                  : localJoined === true ? 'REMOVE FORM MY EVENTS' : 'ADD TO MY EVENTS' /* eslint no-nested-ternary: 0 */
               } 
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              console.log('close pressed')
-            }}
-          >
-            <Text style={styles.buttonText}>
-              CLOSE
-            </Text>
-          </TouchableOpacity>
-        </View>
+        </ScrollView>
       </View>
     )
   }
@@ -133,35 +136,58 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   textfield: {
-    paddingHorizontal: 20,
+    marginHorizontal: '6%',
+    paddingTop: '8%',
+    // margin: 5,
+    // borderBottomWidth: 1,
+    borderBottomColor: '#00000012',
+    color: '#000000de',
+    fontSize: 14,
+    // backgroundColor: '#f9f9f9',
+  },
+  description: {
+    marginHorizontal: '6%',
     paddingVertical: 15,
     // margin: 5,
     borderBottomWidth: 1,
     borderBottomColor: '#00000012',
+    // color: '#00000099',
     // backgroundColor: '#f9f9f9',
   },
   title: {
-    paddingHorizontal: 20,
+    marginHorizontal: '6%',
     paddingTop: 10,
-    fontSize: 25,
-    fontWeight: 'bold',
+    fontSize: 24,
+    fontFamily: 'Roboto',
+    // fontWeight: 'bold',
     // textAlign: 'center', 
     color: '#f57c00',
   },
   buttonText: {
     textAlign: 'center', 
-    color: 'white',
+    color: '#ffffff',
     fontWeight: 'bold',
+    fontSize: 14,
+    // fontFamily: 'Rubik',
   },
   button: {
-    padding: 5,
-    margin: 10,
-    width: '40%',
+    paddingVertical: '3%',
+    marginTop: '10%',
+    // margin: '6%',
+    marginHorizontal: '15%',
+    // width: '90%',
     borderRadius: 5,
-    shadowRadius: 5,
+    // shadowRadius: 5,
+    elevation: 2,
     backgroundColor: '#f57c00',
     // alignItems: 'center',
-    justifyContent: 'center',
+    //  justifyContent: 'center',
+  },
+  dateTime: {
+    marginHorizontal: '6%',
+    fontSize: 12,
+    color: '#00000099',
+    // paddingVertical: 15,
   },
   top: {
     height: 200,

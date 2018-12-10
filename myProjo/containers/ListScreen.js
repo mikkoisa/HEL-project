@@ -12,12 +12,13 @@ class ListScreen extends React.Component {
     this.state = {
       events: null,
       isLoading: true,
-      ownEventsLoading: true,
+      // ownEventsLoading: true,
       ownEvents: null,
     }
   }
 
   componentDidMount() {
+    this.props.navigation.setParams({ handleBarNavigation: this.handleBarNavigation })
     this.getEventList()
     this.getOwnEvents()
   }
@@ -29,6 +30,10 @@ class ListScreen extends React.Component {
     navigation.navigate(routeName, { storeOwnEvent: this.storeOwnEvent, event, joined })
   }
 
+  handleBarNavigation = () => {
+    this.handleNavigation('Own')
+  }
+
   getOwnEvents = () => {
     asyncGetData()
       .then((result) => {
@@ -36,12 +41,12 @@ class ListScreen extends React.Component {
         if (result) {
           this.setState({
             ownEvents: JSON.parse(result),
-            ownEventsLoading: false,
+            // ownEventsLoading: false,
           })
         } else {
           this.setState({
             ownEvents: {},
-            ownEventsLoading: false,
+            // ownEventsLoading: false,
           })
         }   
       })
@@ -118,7 +123,7 @@ class ListScreen extends React.Component {
   }
 
   render() {
-    const { events, isLoading, ownEventsLoading } = this.state 
+    const { events, isLoading/* , ownEventsLoading */ } = this.state 
     if (!isLoading) {
       return (
         <EventList

@@ -37,7 +37,7 @@ class MapScreen extends React.Component {
   }
 
   componentDidMount() {
-    console.log('component mounted')
+    this.props.navigation.setParams({ handleBarNavigation: this.handleBarNavigation })
     this.getInitialLocation()
     // this.followLocation()
     this.refreshContent()
@@ -52,8 +52,11 @@ class MapScreen extends React.Component {
     navigation.navigate(routeName, { storeOwnEvent: this.storeOwnEvent, event, joined })
   }
 
+  handleBarNavigation = () => {
+    this.handleNavigation('Own')
+  }
+
   refreshContent = () => {
-    console.log('updating events and own events')
     this.getEventList()
     this.getOwnEvents()
   }
