@@ -12,6 +12,8 @@ class CreateScreen extends React.Component {
       oneHidden: false,
       twoHidden: true,
 
+      keyboard: false,
+
       newLocation: null,
 
       // Form data
@@ -30,6 +32,10 @@ class CreateScreen extends React.Component {
       dateError: null,
       timeError: null,
     }
+  }
+
+  moveKeyboard = (state) => {
+    this.setState({ keyboard: state })
   }
 
   submitEvent = () => {
@@ -251,11 +257,15 @@ class CreateScreen extends React.Component {
 
   moveMap = (location, type) => {
     if (type === 'move') {
-      console.log(location)
+      console.log(location) 
       this.setState({ pickedLocation: { lat: location.latitude, lng: location.longitude } })
+    } else if (type === 'newLocation') {
+      console.log('moving small map')
+      this.setState({ newLocation: location })
     } else {
       this.setState({ pickedLocation: location })
     } 
+    this.setState({ newLocation: null })
   }
 
   changeToTabTwo = () => {
@@ -276,8 +286,9 @@ class CreateScreen extends React.Component {
   render() {
     const { pickedLocation, newLocation, oneHidden, twoHidden,
       name, shortDescription, description, date, time, minAge, maxAge,
-      nameError, shortError, descError, dateError, timeError, ageError } = this.state
+      nameError, shortError, descError, dateError, timeError, ageError, keyboard } = this.state
     const { position } = this.props
+    console.log(keyboard)
     return (
       <View style={styles.container}>
         <Text style={styles.pageTitle}>Create Event</Text>
@@ -301,6 +312,8 @@ class CreateScreen extends React.Component {
             /* eslint object-property-newline : 0 */
           }}
           hidden={oneHidden}
+          moveKeyboard={this.moveKeyboard}
+          keyboard={keyboard}
           saveText={this.saveText}
           saveDate={this.saveDate}
           saveTime={this.saveTime}

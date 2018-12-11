@@ -10,10 +10,14 @@ class CustomAgeInput extends React.Component {
   }
 
   onFocus = () => {
+    const { moveKeyboard } = this.props
+    moveKeyboard(true)
     this.setState({ focused: true })
   }
 
   unFocus = () => {
+    const { moveKeyboard } = this.props
+    moveKeyboard(false)
     this.setState({ focused: false })
   }
 

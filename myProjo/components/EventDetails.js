@@ -63,9 +63,9 @@ class EventDetails extends React.Component {
             {'Ages:'}
           </Text>
           <Text style={{ marginHorizontal: '8%' }}>
-            {event.audience_min_age}
+            {event.audience_min_age ? event.audience_min_age : '0' }
             {' - '}
-            {event.audience_max_age}
+            {event.audience_max_age ? event.audience_max_age : '99'}
           </Text>
           <TouchableOpacity
             style={styles.button}

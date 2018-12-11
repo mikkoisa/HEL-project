@@ -27,6 +27,7 @@ class FormTwo extends React.Component {
 
   render() {
     const { hidden, moveMap, newLocation, submitEvent, changeTab, position } = this.props
+    console.log('new location', newLocation)
     if (hidden) {
       return null
     }
@@ -52,11 +53,15 @@ class FormTwo extends React.Component {
               longitudeDelta: 0.02, 
             }}
             region={newLocation ? { 
-              latitude: newLocation.latitude,
-              longitude: newLocation.longitude,
+              latitude: newLocation.lat,
+              longitude: newLocation.lng,
               latitudeDelta: 0.02,
               longitudeDelta: 0.02,
             } : {
+              /* latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+              latitudeDelta: 0.02,
+              longitudeDelta: 0.02, */
               // If no locaton searched, show initial region
             }}
              
@@ -92,10 +97,10 @@ class FormTwo extends React.Component {
               submitEvent
             }
           >
-            <Text style={{ color: '#f57c00', fontSize: 17, fontFamily: 'sans-serif' }}>
+            <Text style={{ color: '#ffffff', fontSize: 17, fontFamily: 'sans-serif' }}>
               { 'Create ' }
               <Icon
-                style={{ color: '#f57c00' }}
+                style={{ color: '#ffffff'}}
                 name='plus'
                 size={17}
               />
@@ -143,6 +148,8 @@ const styles = StyleSheet.create({
   createButton: {
     justifyContent: 'center', 
     alignItems: 'center',    
+    backgroundColor: '#f57c00',
+    borderRadius: 4,
     width: '30%',
     height: '50%',
   },
