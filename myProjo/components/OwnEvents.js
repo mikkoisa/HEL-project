@@ -8,8 +8,6 @@ const OwnEvents = props => (
     <FlatList
       style={styles.list}
       data={props.eventList}
-          // onScrollBeginDrag={() => this.onSwipeUp()}
-          // onMomentumScrollEnd={() => this.onSwipeDown()}
       renderItem={({ item }) => (
         <View style={styles.item}>
           <Text style={{ fontSize: 14, fontFamily: 'Roboto' }}>
@@ -50,10 +48,8 @@ const styles = StyleSheet.create({
     marginBottom: '0%',
     flex: 1,
     backgroundColor: '#ffffff',
-    // alignItems: 'center',
   },
   title: {
-    // textAlign: 'center',
     fontSize: 22,
     fontFamily: 'sans-serif',
     color: '#00000087',
@@ -61,7 +57,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: '10%',
   },
   list: {
-    // borderTopWidth: 1,
     borderColor: '#00000087',
   },
   item: {

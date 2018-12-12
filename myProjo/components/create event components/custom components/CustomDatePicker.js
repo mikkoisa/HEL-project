@@ -174,7 +174,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   textField: {
-    // height: 40,
     width: '45%',
     borderWidth: 1,
     borderColor: '#00000040',
@@ -184,7 +183,6 @@ const styles = StyleSheet.create({
     marginTop: '4%',
   },
   textFieldFocused: {
-    // height: 40,
     width: '45%',
     borderWidth: 1,
     borderColor: '#f57c00',

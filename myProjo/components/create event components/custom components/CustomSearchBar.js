@@ -11,17 +11,14 @@ class CustomSearchBar extends React.Component {
   }
 
   onFocus = () => {
-    console.log('on focus called')
     this.setState({ focused: true })
   }
 
   unFocus = () => {
-    console.log('unfocus called')
     this.setState({ focused: false })
   }
 
   componentWillUnmount = () => {
-    console.log('unmounting!!!!!!!')
   }
 
   render() {
@@ -37,34 +34,7 @@ class CustomSearchBar extends React.Component {
           }}
           >
             <GooglePlacesAutocomplete
-              // style={{ color: '#00000087', width: '100%' }}
               placeholder='Search for location or address'
-            /* styles={{
-              container: {
-                alignItems: 'center',
-                margin: 0,
-                padding: 0,
-                // height: 40,
-              },
-              textInputContainer: {
-                alignItems: 'center',
-                backgroundColor: 'rgba(0,0,0,0)',
-                borderTopWidth: 0,
-                borderBottomWidth: 0,
-                paddingTop: 3,
-                margin: 0,
-                height: 30,
-              },
-              textInput: {
-                paddingLeft: 5,
-                paddingRight: 5,
-                paddingTop: 6,
-                paddingBottom: 6,
-                marginLeft: 0,
-                marginRight: 0,
-                marginTop: 0,
-              },
-            }} */
               styles={{ 
                 container: {  
                 },
@@ -77,28 +47,21 @@ class CustomSearchBar extends React.Component {
                 
                 },
                 description: {
-                // fontWeight: 'bold',
                 },
                 predefinedPlacesDescription: {
                   color: '#1faadb',
                 },
                 textInput: {
-                // flex: 1,
-                // justifyContent: 'flex-start',
+      
                 },
               }}
               autoFocus={false}
-              // underlineColorAndroid='transparent'
-              // multiline={multiline}
               
               onBlur={this.unFocus}
-              // onChangeText={text => saveText(text)}
-              returnKeyType="search" // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype
-              listViewDisplayed='false' // true/false/undefined
+              returnKeyType="search" 
+              listViewDisplayed='false'
               fetchDetails
-              // renderDescription={row => row.description} // custom description render
-              onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
-                // this.setState({ pickedLocation: details.geometry.location })
+              onPress={(data, details = null) => { 
                 moveMap(details.geometry.location, 'newLocation')
               }}
 
@@ -109,19 +72,14 @@ class CustomSearchBar extends React.Component {
               query={{
                 location: '60.1695291,24.9383613',
                 radius: 500,
-                // available options: https://developers.google.com/places/web-service/autocomplete
                 key: 'AIzaSyBvVHjeYM1pIWZmw7fhQefoalEzCFOrGhg',
-              // language: 'en', // language of the results
-              // types: '(geocode)', // default: 'geocode'
               }}
               GooglePlacesSearchQuery={{
-              // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
                 rankby: 'distance',
                 types: 'sport',
               }}
 
               debounce={0}
-              // renderRightButton={() => <Text>Custom text after the input</Text>}
             />
             
           </View>
@@ -143,17 +101,13 @@ const styles = StyleSheet.create({
   searchBar: {
   },
   textField: {
-    // backgroundColor: '#00000012',
-    // height: 40,
     borderWidth: 1,
     borderColor: '#00000040',
     borderRadius: 3,
     paddingRight: '3%',
-    // paddingVertical: '5%',
     marginVertical: '5%',
   },
   textFieldFocused: {
-    // height: 40,
     borderWidth: 1,
     borderColor: '#f57c00',
     borderRadius: 3,

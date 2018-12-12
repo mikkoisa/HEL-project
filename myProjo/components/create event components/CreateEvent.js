@@ -116,15 +116,9 @@ class CreateScreen extends React.Component {
       audience_min_age: minAge,
       audience_max_age: maxAge,
     }
-
-    console.log(formData)
     
     // Posts the event to api
     PostData(ApiUrls.postEvent, formData, this.refreshForm)
-  }
-
-  getCoordinates = (coordinates) => {
-    console.log(coordinates)
   }
 
   refreshForm = (event) => {
@@ -232,7 +226,6 @@ class CreateScreen extends React.Component {
 
   validateTime = (hour, minute) => {
     const { date } = this.state
-    console.log(date.year)
     if (date.year && date.month && date.day) {
       date.year = parseInt(`20${date.year}`, 10)
     }
@@ -257,10 +250,8 @@ class CreateScreen extends React.Component {
 
   moveMap = (location, type) => {
     if (type === 'move') {
-      console.log(location) 
       this.setState({ pickedLocation: { lat: location.latitude, lng: location.longitude } })
     } else if (type === 'newLocation') {
-      console.log('moving small map')
       this.setState({ newLocation: location })
     } else {
       this.setState({ pickedLocation: location })
@@ -288,7 +279,6 @@ class CreateScreen extends React.Component {
       name, shortDescription, description, date, time, minAge, maxAge,
       nameError, shortError, descError, dateError, timeError, ageError, keyboard } = this.state
     const { position } = this.props
-    console.log(keyboard)
     return (
       <View style={styles.container}>
         <Text style={styles.pageTitle}>Create Event</Text>
@@ -346,11 +336,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   titleFocused: {
-    // flex: 1,
-    // width: '50%',
     textAlign: 'center',
-    // paddingHorizontal: '5%',
-    // marginHorizontal: '5%',
     fontSize: 16,
     fontFamily: 'sans-serif',
     color: '#f57c00',
@@ -358,11 +344,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#f57c00',
   },
   title: {
-    // flex: 1,
-    // width: '50%',
     textAlign: 'center',
-    // paddingHorizontal: '5%',
-    // marginHorizontal: '5%',
     fontSize: 16,
     fontFamily: 'sans-serif',
     color: '#00000087',

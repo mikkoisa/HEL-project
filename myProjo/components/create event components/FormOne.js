@@ -13,7 +13,6 @@ const FormOne = (props) => {
     return null
   }
 
-  console.log(keyboard)
   return (
     <KeyboardAvoidingView behavior="position" enabled={keyboard}>
       <ScrollView 
@@ -95,11 +94,8 @@ const styles = StyleSheet.create({
   nextbutton: {
     alignSelf: 'flex-end',
     alignItems: 'center',
-    // marginRight: '15%',
-    //  marginBottom: '5%',
     width: '11%',
     height: '11%',
-    // backgroundColor: '#f57c00',
     paddingBottom: '10%',
     borderRadius: 50,
   },

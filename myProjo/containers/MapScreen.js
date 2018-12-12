@@ -39,14 +39,12 @@ class MapScreen extends React.Component {
   componentDidMount() {
     this.props.navigation.setParams({ handleBarNavigation: this.handleBarNavigation })
     this.getInitialLocation()
-    // this.followLocation()
     this.refreshContent()
     // asyncRemoveData()
   }
 
   handleNavigation = (routeName, event) => {
     const { navigation } = this.props
-    // const { ownEvents } = this.state
     const joined = this.checkDuplicate(event)
 
     navigation.navigate(routeName, { storeOwnEvent: this.storeOwnEvent, event, joined })
@@ -64,7 +62,6 @@ class MapScreen extends React.Component {
   getEventList = () => {
     fetchGetJSON(`${apiUrls.baseEventApiUrl}${apiUrls.helsinkiToday}`)
       .then((result) => {
-        console.log(result.data)
         this.setState({
           events: result.data,
           eventsLoading: false,
@@ -75,7 +72,6 @@ class MapScreen extends React.Component {
   getOwnEvents = () => {
     asyncGetData()
       .then((result) => {
-        console.log('got from async: ', JSON.parse(result))
         if (result) {
           this.setState({
             ownEvents: JSON.parse(result),
@@ -99,7 +95,6 @@ class MapScreen extends React.Component {
     }
 
     if (!this.checkDuplicate(event)) {
-      // data.push(ownEvents)
       if (data) {
         data.push(event)
       } else {
@@ -110,7 +105,6 @@ class MapScreen extends React.Component {
     }    
     asyncSaveData(data)
       .then((result) => {
-        console.log(result)
         if (result === 'success') {
           this.getOwnEvents()
         }
@@ -122,12 +116,10 @@ class MapScreen extends React.Component {
     if (event) {
       for (let i = 0; i < ownEvents.length; i += 1) {
         if (ownEvents[i].id === event.id) {
-          console.log('is in own events')
           return true
         }
       }
     }
-    console.log('not in own events')
     return false
   }
   
@@ -152,14 +144,6 @@ class MapScreen extends React.Component {
     this.setState({
       position,
     })
-  }
-
-  followLocation = () => {
-    navigator.geolocation.watchPosition(
-      (position) => {
-        console.log(position.coords)
-      },
-    )
   }
 
   render() {

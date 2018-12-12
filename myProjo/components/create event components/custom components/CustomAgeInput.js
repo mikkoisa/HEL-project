@@ -33,7 +33,6 @@ class CustomAgeInput extends React.Component {
         ]}
         >
           <TextInput
-            // textAlign='center'
             style={[styles.textFieldText, { paddingLeft: '10%' }]}
             keyboardType='numeric'
             value={valueMin}
@@ -47,7 +46,6 @@ class CustomAgeInput extends React.Component {
           />
           <Text centerText='true' style={{ color: '#3c4043' }}> — </Text>
           <TextInput
-            // textAlign='center'
             style={[styles.textFieldText, { paddingLeft: '10%' }]}
             keyboardType='numeric'  
             value={valueMax}
@@ -131,7 +129,6 @@ const styles = StyleSheet.create({
   errorTextHidden: {
     color: '#ffffff',
     fontSize: 12,
-    // margin: '4%',
   },
   label: {
     position: 'absolute',

@@ -5,14 +5,12 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 const EventListItem = (props) => {
   const { onHandlePress, item } = props
   let source = null
-  console.log(item)
 
   if (!item.images[0]) {
     source = require('../../assets/ball-football-game-39562.jpg') // eslint-disable-line global-require
   } else {
     source = { uri: item.images[0].url }
   }
-  console.log(item.images)
 
   return (
     <TouchableOpacity 
@@ -47,25 +45,21 @@ const EventListItem = (props) => {
 const styles = StyleSheet.create({
   item: {
     borderColor: '#0003',
-    // borderWidth: StyleSheet.hairlineWidth,
+  
     borderWidth: 1,
     borderRadius: 10,
     backgroundColor: '#f7f8f9',
     elevation: 5,
     margin: 5,
-    // padding: 15,
     flexDirection: 'row',
     alignItems: 'center',
     paddingEnd: 15,
-
-    // justifyContent: 'space-between',
   },
   imageContainer: {
 
     paddingRight: 15,
   },
   textContainer: {
-    // alignItems: 'center',
     width: 0,
 
     flexGrow: 1,
@@ -79,7 +73,6 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 10,
     width: 82,
     height: 82,
-    // resizeMode: 'contain',
     
   },
   textTitle: {
@@ -87,8 +80,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   textDescription: {
-    // flex: 1,
-    // flexWrap: 'wrap',
   }, 
 })
 

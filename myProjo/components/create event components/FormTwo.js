@@ -10,24 +10,12 @@ class FormTwo extends React.Component {
     super(props);
 
     this.state = {
-      // region: null,
     }
   }
 
-  /* repositionMap(region) {
-    this.setState({ 
-      region: {
-        latitude: region.latitude, 
-        longitude: region.longitude,
-        latitudeDelta: 0.02,
-        longitudeDelta: 0.02,
-      }, 
-    })
-  } */
 
   render() {
     const { hidden, moveMap, newLocation, submitEvent, changeTab, position } = this.props
-    console.log('new location', newLocation)
     if (hidden) {
       return null
     }
@@ -58,10 +46,6 @@ class FormTwo extends React.Component {
               latitudeDelta: 0.02,
               longitudeDelta: 0.02,
             } : {
-              /* latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
-              latitudeDelta: 0.02,
-              longitudeDelta: 0.02, */
               // If no locaton searched, show initial region
             }}
              
@@ -100,7 +84,7 @@ class FormTwo extends React.Component {
             <Text style={{ color: '#ffffff', fontSize: 17, fontFamily: 'sans-serif' }}>
               { 'Create ' }
               <Icon
-                style={{ color: '#ffffff'}}
+                style={{ color: '#ffffff' }}
                 name='plus'
                 size={17}
               />
@@ -124,12 +108,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderWidth: 2,
     borderColor: '#d6d7da',
-    // margin: '10%',
   },
   map: {
-    // flex: 1,
-    // justifyContent: 'center',
-    // margin: '10%',
     padding: '45%',
   },
   icon: {
@@ -142,7 +122,6 @@ const styles = StyleSheet.create({
     marginBottom: '15%',
     width: '11%',
     height: '50%',
-    // backgroundColor: '#f57c00',
     borderRadius: 50,
   },
   createButton: {

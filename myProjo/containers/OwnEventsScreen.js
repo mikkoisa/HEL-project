@@ -26,7 +26,6 @@ class OwnEventsScreen extends React.Component {
       } 
       return 'no value found'
     } catch (error) {
-      console.log('error getting ', error)
       return error
       // Error retrieving data
     } 
@@ -38,7 +37,6 @@ class OwnEventsScreen extends React.Component {
 
   render() {
     const { eventList } = this.state
-    console.log(eventList)
     return (
       <OwnEvents 
         eventList={eventList}

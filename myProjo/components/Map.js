@@ -1,13 +1,8 @@
 import React from 'react'
 import MapView, { Marker } from 'react-native-maps';
-import { View, StyleSheet, StatusBar, Alert } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import PropTypes from 'prop-types'
 import { NavigationEvents } from 'react-navigation'
-// import TopBar from './TopBar'
-// import Modal from 'react-native-modal'
-// import EventDetails from './EventDetails'
-// import userMarker from '../assets/userMarker.png'
-// import place from '../assets/place.png'
 
 class Map extends React.Component {
   constructor(props) {
@@ -15,35 +10,23 @@ class Map extends React.Component {
 
     this.state = {
       statusBarHeight: 1,
-      // modalVisible: false,
-      /* clickedEvent: { 
-        latlng: { latitude: 60.1695291, longitude: 24.9383613 }, 
-        title: 'Test', shortDescription: 'Test', description: 'Test' }, */
     }
   }
 
-  /* setModalVisible(visible, clickedEvent) {
-    StatusBar.setHidden(true);
-    this.setState({ clickedEvent })
-    this.setState({ modalVisible: visible })
-  } */
   componentWillMount() {
     // Hack to ensure the showsMyLocationButton is shown initially. Idea is to force a repaint
     setTimeout(() => this.setState({ statusBarHeight: 0 }), 500);
   }
 
   render() {
-    console.log('rendering')
     const { position, events, /* ownEvents, */ handleNavigation, refresh } = this.props
-    const { mapStyle } = this.state
 
     for (let i = 0; i < events.length; i += 1) {
-      console.log(events[i])
       if (events[i].custom_data) {
         events[i].location.position.coordinates[0] = parseFloat(events[i].custom_data.lng)
         events[i].location.position.coordinates[1] = parseFloat(events[i].custom_data.lat)
       } else {
-        console.log('heiii')
+        console.log('wetn to else')
       }
     }
   
@@ -64,19 +47,11 @@ class Map extends React.Component {
             refresh()
           }}
         />
-        {/*  <StatusBar hidden /> */}
-        {/* <TopBar handleNavigation={handleNavigation} /> */}
         <MapView
-          // loadingEnabled
           showsUserLocation
           showsMyLocationButton
           style={styles.container}
           initialRegion={position.coords}
-          // customMapStyle={mapStyle}
-          // region={position.coords}
-          /* onRegionChangeComplete={(region) => {
-            this.setNewInitialRegion(region)
-          }} */
         >
           {events.map(event => (
             // This will iterate trhrough the events and display them as markers
@@ -91,7 +66,6 @@ class Map extends React.Component {
               // image={place}
               pinColor='#bb4d00'
               onCalloutPress={() => {
-                // this.setModalVisible(true, event)
                 handleNavigation('Event', event)
               }}
             />
@@ -103,7 +77,6 @@ class Map extends React.Component {
 }
 
 Map.propTypes = {
-  // position: PropTypes.object.isRequired,
   events: PropTypes.arrayOf(PropTypes.shape({})),
 }
 
