@@ -72,7 +72,10 @@ class CustomSearchBar extends React.Component {
               query={{
                 location: '60.1695291,24.9383613',
                 radius: 500,
-                key: 'AIzaSyBvVHjeYM1pIWZmw7fhQefoalEzCFOrGhg',
+                // available options: https://developers.google.com/places/web-service/autocomplete
+                key: 'API KEY HERE',
+              // language: 'en', // language of the results
+              // types: '(geocode)', // default: 'geocode'
               }}
               GooglePlacesSearchQuery={{
                 rankby: 'distance',
