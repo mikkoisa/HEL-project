@@ -3,6 +3,7 @@ import MapView, { Marker } from 'react-native-maps';
 import { View, StyleSheet, Alert } from 'react-native';
 import PropTypes from 'prop-types'
 import { NavigationEvents } from 'react-navigation'
+import moment from 'moment'
 
 class Map extends React.Component {
   constructor(props) {
@@ -62,7 +63,7 @@ class Map extends React.Component {
                 longitude: event.location.position.coordinates[0], 
               }} 
               title={event.name[Object.keys(event.name)[0]]}
-              // description={event.location.name[Object.keys(event.location.name)[0]]}
+              description={event.start_time ? moment(event.start_time).locale('en-gb').format('LLLL') : ''}
               // image={place}
               pinColor='#bb4d00'
               onCalloutPress={() => {
