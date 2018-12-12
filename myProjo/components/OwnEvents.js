@@ -1,7 +1,7 @@
 import React from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { View, FlatList, Text, StyleSheet } from 'react-native'
-
+// Own events page with list of events
 const OwnEvents = props => (
   <View style={styles.container}>
     <Text style={styles.title}>My events</Text>

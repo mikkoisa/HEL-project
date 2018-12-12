@@ -32,7 +32,10 @@ class ListScreen extends React.Component {
   handleBarNavigation = () => {
     this.handleNavigation('Own')
   }
-
+  
+  // Gets own events from asyncStorage
+  // Duplicate with Mapscreen function.
+  // TODO: Change this function logic to util helper function.
   getOwnEvents = () => {
     asyncGetData()
       .then((result) => {
@@ -48,6 +51,9 @@ class ListScreen extends React.Component {
       })
   }
 
+  // saves own events to asyncStorage
+  // Duplicate with Mapscreen function.
+  // TODO: Change this function logic to util helper function.
   storeOwnEvent = (event) => {
     const { ownEvents } = this.state
     let data = null
@@ -73,6 +79,9 @@ class ListScreen extends React.Component {
       })
   }
 
+  // Check duplications before saving.
+  // Duplicate with Mapscreen function.
+  // TODO: Change this function logic to util helper function.
   checkDuplicate = (event) => {
     const { ownEvents } = this.state
     if (event) {
@@ -84,7 +93,10 @@ class ListScreen extends React.Component {
     }
     return false
   }
-
+  
+  // Get events from test api with filter params
+  // Duplicate with Mapscreen function.
+  // TODO: Change this function logic to util helper function.
   getEventList = () => {
     this.setState({
       // isLoading: true,
