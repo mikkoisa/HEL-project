@@ -16,6 +16,7 @@ class OwnEventsScreen extends React.Component {
     navigation.navigate(routeName, event)
   }
 
+  // Getting data from asyncStorage
   getOwnEvents = async () => {
     console.log('getting')
     try {

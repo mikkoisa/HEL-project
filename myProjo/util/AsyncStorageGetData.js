@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native'
-
+// Get own events from asyncStorage 
+// TODO: Change getting to database after creating login authentication.
 export default async () => {
   console.log('getting')
   try {
