@@ -18,19 +18,21 @@ class EventList extends React.Component {
     const { filter } = this.state
     const { events, handleNavigation, refreshList, refreshOwnEvents } = this.props
     let filteredEvents = events
-    const firstEvent = filteredEvents[0]
 
     if (filter === 'today') {
-      filteredEvents = filteredEvents.filter(obj => moment(obj.start_time).format('LLLL') === moment().format('LLLL'))
+      filteredEvents = filteredEvents.filter(obj => moment(obj.start_time).subtract(2, 'hours').format('LL') === moment().format('LL'))
     } else if (filter === 'tomorrow') {
-      filteredEvents = filteredEvents.filter(obj => moment(obj.start_time).format('LLLL') === moment().add(1, 'days').format('LLLL'))
+      filteredEvents = filteredEvents.filter(obj => moment(obj.start_time).subtract(2, 'hours').format('LL') === moment().add(1, 'days').format('LL'))
     } else if (filter === 'this week') {
-      filteredEvents = filteredEvents.filter(obj => moment(obj.start_time).isAfter(moment().startOf('isoWeek'))
-        && moment(obj.start_time).isBefore(moment().endOf('isoWeek')))
+      filteredEvents = filteredEvents.filter(obj => moment(obj.start_time).subtract(2, 'hours').isAfter(moment().startOf('isoWeek'))
+        && moment(obj.start_time).subtract(2, 'hours').isBefore(moment().endOf('isoWeek')))
     } else if (filter === 'next week') {
-      filteredEvents = filteredEvents.filter(obj => moment(obj.start_time).isAfter(moment().add(1, 'weeks').startOf('isoWeek'))
-        && moment(obj.start_time).isBefore(moment().add(1, 'weeks').endOf('isoWeek')))
+      filteredEvents = filteredEvents.filter(obj => moment(obj.start_time).subtract(2, 'hours').isAfter(moment().add(1, 'weeks').startOf('isoWeek'))
+        && moment(obj.start_time).subtract(2, 'hours').isBefore(moment().add(1, 'weeks').endOf('isoWeek')))
     }
+
+    const firstEvent = filteredEvents[0]
+
     console.log(filteredEvents)
     if (filteredEvents.length !== 0) { 
       return (

@@ -1,3 +1,5 @@
+// Fetching data from linked courses test api.
+// TODO: Hide apikey to .env file
 export default async (url, bodyData, refresh) => {
   fetch('https://linkedcourses-api.test.hel.ninja/linkedcourses-test/v1/event/', { 
     method: 'POST',

@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Text, View, ScrollView, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { NavigationActions } from 'react-navigation';
 import HTMLView from 'react-native-htmlview'
 import moment from 'moment'
 import 'moment/locale/en-gb'
+
 
 class EventDetails extends React.Component {  
   constructor(props) {
@@ -15,9 +17,12 @@ class EventDetails extends React.Component {
   }
 
   render() {
-    const { event, storeOwnEvent, joined } = this.props.navigation.state.params
+    const { event, storeOwnEvent, joined, handleNavigation } = this.props.navigation.state.params
     const { localJoined } = this.state
     let source = null
+    moment.locale('en-gb')
+    console.log(event.start_time)
+    console.log(moment(event.start_time))
     
     if (!event.images[0]) {
       source = require('../assets/ball-football-game-39562.jpg') // eslint-disable-line global-require
@@ -36,7 +41,7 @@ class EventDetails extends React.Component {
             />
           </View>
           <Text style={styles.title}>{event.name[Object.keys(event.name)[0]]}</Text>
-          <Text style={styles.dateTime}>{moment(event.start_time).locale('en-gb').format('LLLL')}</Text>
+          <Text style={styles.dateTime}>{moment(event.start_time).subtract(2, 'hours').locale('en-gb').format('LLLL')}</Text>
           <Text style={styles.textfield}>
             {event.short_description[Object.keys(event.short_description)[0]]}
           </Text>
@@ -48,11 +53,20 @@ class EventDetails extends React.Component {
           <Text style={[styles.dateTime, { marginTop: '3%' }]}>
             {'Ages:'}
           </Text>
-          <Text style={{ marginHorizontal: '8%' }}>
+          <Text style={{ marginHorizontal: '8%', marginBottom: '10%' }}>
             {event.audience_min_age ? event.audience_min_age : '0' }
             {' - '}
             {event.audience_max_age ? event.audience_max_age : '99'}
           </Text>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              this.props.navigation.dispatch(NavigationActions.back())
+              handleNavigation('Map', event.custom_data, 'Event')
+            }}
+          >
+            <Text style={styles.buttonText}>SHOW ON MAP</Text>
+          </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
@@ -144,7 +158,7 @@ const styles = StyleSheet.create({
   },
   button: {
     paddingVertical: '3%',
-    marginTop: '10%',
+    marginTop: '3%',
     marginHorizontal: '15%',
     borderRadius: 5,
     elevation: 2,

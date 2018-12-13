@@ -9,6 +9,11 @@ const FormOne = (props) => {
   const { hidden, saveText, saveDate, saveTime, changeTab,
     formData, moveKeyboard, keyboard } = props
 
+  const changeForm = () => {
+    moveKeyboard(false)
+    changeTab()
+  }
+
   if (hidden) {
     return null
   }
@@ -18,12 +23,12 @@ const FormOne = (props) => {
       <ScrollView 
         showsVerticalScrollIndicator={false}
         style={styles.form} 
-        keyboardShouldPersistTaps='always'
+        keyboardShouldPersistTaps='handled'
       >
         <CustomTextInput
           title='Event name'
           placeholder='Event name'
-          saveText={saveText}
+          saveText={saveText} 
           id='name'
           keyType='default'
           value={formData.name}
@@ -70,9 +75,9 @@ const FormOne = (props) => {
         <TouchableOpacity
           style={styles.nextbutton}
           title='Change tab'
-          onPress={
-          changeTab
-        }
+          onPress={() => {
+            changeForm()
+          }}
         >
           <Icon
             style={{ color: '#f57c00' }}

@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native'
-
+// Saving own events to asyncStorage.
+// TODO: Change saving to database after creating login authentication.
 export default async (data) => {
   console.log('saving...', data)
   try {

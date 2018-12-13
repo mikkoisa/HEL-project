@@ -38,6 +38,7 @@ class CreateScreen extends React.Component {
     this.setState({ keyboard: state })
   }
 
+  // Submit event with validation to all fields. 
   submitEvent = () => {
     const { name, shortDescription, description, date, time, minAge, maxAge } = this.state
     let { nameError, shortError, descError, ageError, dateError, timeError } = this.state
@@ -82,6 +83,10 @@ class CreateScreen extends React.Component {
     }
   }
 
+  // If all validations passed then this is called and it saves to the test api
+  // TODO: location would be better to save in places but we cannot save in there our information.
+  // Backend needs to have some fetching with street or place name or 
+  // coordinates so that information can be saved there
   postEvent = () => {
     const { name, shortDescription, description, 
       date, time, pickedLocation, minAge, maxAge } = this.state
@@ -121,6 +126,7 @@ class CreateScreen extends React.Component {
     PostData(ApiUrls.postEvent, formData, this.refreshForm)
   }
 
+  // sets form back to initial state.
   refreshForm = (event) => {
     this.setState({
       oneHidden: false,
@@ -141,9 +147,10 @@ class CreateScreen extends React.Component {
       timeError: null,
     })
     const { handleNavigation } = this.props
-    handleNavigation('Map', event)
+    handleNavigation('Map', event, 'Create')
   }
 
+  // Saves text to states when finishing inputting data.
   saveText = (type, text) => {
     const { name, shortDescription, description, minAge, maxAge } = this.state
     if (type === 'name') {
@@ -173,11 +180,29 @@ class CreateScreen extends React.Component {
         this.setState({ descError: null })
         this.setState({ description: text }) 
       }
-    } else if (type === 'minAge' || type === 'maxAge') {
+    } else if (type === 'minAge') {
       if (text === 'ended') {
-        if (minAge === null || maxAge === null || !minAge.trim() || !maxAge.trim()) {
+        console.log('ended called')
+        if (minAge === null || !minAge.trim()) {
           this.setState({ ageError: 'Both fields required' })
         } else if (!minAge.match(/^[0-9]+$/)) {
+          this.setState({ ageError: 'Only numbers allowed' })
+        } else if (parseInt(maxAge, 10) < parseInt(minAge, 10)) {
+          this.setState({ ageError: 'Max is lower than min' })
+        } else {
+          this.setState({ ageError: null })
+        }
+      } else if (type === 'minAge') {
+        this.setState({ minAge: text }) 
+      } else if (type === 'maxAge') {
+        this.setState({ maxAge: text }) 
+      }
+    } else if (type === 'maxAge') {
+      if (text === 'ended') {
+        console.log('ended called')
+        if (maxAge === null || !maxAge.trim()) {
+          this.setState({ ageError: 'Both fields required' })
+        } else if (!maxAge.match(/^[0-9]+$/)) {
           this.setState({ ageError: 'Only numbers allowed' })
         } else if (parseInt(maxAge, 10) < parseInt(minAge, 10)) {
           this.setState({ ageError: 'Max is lower than min' })
@@ -192,6 +217,7 @@ class CreateScreen extends React.Component {
     }
   }
 
+  // Saves date and does some modifications so that it is saved correctly.
   saveDate = (year, month, day) => {
     const { time } = this.state
     this.validateDate(year, month, day)
@@ -202,11 +228,13 @@ class CreateScreen extends React.Component {
     }
   }
 
+  // Saves clock  
   saveTime = (hour, minute) => {
     this.validateTime(hour, minute)
     this.setState({ time: { hour, minute } })
   }
 
+  // checks that date isn't in the past.
   validateDate = (year, month, day) => {
     const today = new Date();
     const thisYear = parseInt(today.getFullYear(), 10)
@@ -224,6 +252,7 @@ class CreateScreen extends React.Component {
     }
   }
 
+  // Checks that time isn't in the past.
   validateTime = (hour, minute) => {
     const { date } = this.state
     if (date.year && date.month && date.day) {

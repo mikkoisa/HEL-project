@@ -43,11 +43,11 @@ class MapScreen extends React.Component {
     // asyncRemoveData()
   }
 
-  handleNavigation = (routeName, event) => {
+  handleNavigation = (routeName, event, from) => {
     const { navigation } = this.props
     const joined = this.checkDuplicate(event)
 
-    navigation.navigate(routeName, { storeOwnEvent: this.storeOwnEvent, event, joined })
+    navigation.navigate(routeName, { storeOwnEvent: this.storeOwnEvent, event, joined, handleNavigation: this.handleNavigation, from })
   }
 
   handleBarNavigation = () => {
@@ -58,7 +58,8 @@ class MapScreen extends React.Component {
     this.getEventList()
     this.getOwnEvents()
   }
-
+  
+  // Get events from test api with filter params
   getEventList = () => {
     fetchGetJSON(`${apiUrls.baseEventApiUrl}${apiUrls.helsinkiToday}`)
       .then((result) => {
@@ -86,6 +87,7 @@ class MapScreen extends React.Component {
       })
   }
 
+  // Saves own events to asyncStorage and before saving checks if there is duplicates.
   storeOwnEvent = (event) => {
     const { ownEvents } = this.state
     let data = null
@@ -111,6 +113,7 @@ class MapScreen extends React.Component {
       })
   }
 
+  // Duplication checking logic 
   checkDuplicate = (event) => {
     const { ownEvents } = this.state
     if (event) {
@@ -123,6 +126,7 @@ class MapScreen extends React.Component {
     return false
   }
   
+  // gets first user location.
   getInitialLocation = () => {
     // Get the coordinates and set them to states
     let currentPos = null
@@ -140,6 +144,7 @@ class MapScreen extends React.Component {
     })
   }
 
+  // Updates user own location.
   updatePosition = (position) => {
     this.setState({
       position,

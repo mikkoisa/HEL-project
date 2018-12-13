@@ -1,3 +1,4 @@
+// Getting data from linked couses test api. Can be also used in other fetches.
 export default (url, customHeaders = {}) => {
   // console.log(`goes to fetch: ${url}`)
   const defaultHeaders = {
