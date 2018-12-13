@@ -13,7 +13,8 @@
         "jsx-quotes": 0,
         "react/prop-types": 0,
         "react/destructuring-assignment": 0,
-        "linebreak-style": 0
+        "linebreak-style": 0,
+        "max-len": 0
     },
     "globals": {
         "navigator": true,

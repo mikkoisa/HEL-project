@@ -141,7 +141,7 @@ class CreateScreen extends React.Component {
       timeError: null,
     })
     const { handleNavigation } = this.props
-    handleNavigation('Map', event)
+    handleNavigation('Map', event, 'Create')
   }
 
   saveText = (type, text) => {
@@ -173,11 +173,29 @@ class CreateScreen extends React.Component {
         this.setState({ descError: null })
         this.setState({ description: text }) 
       }
-    } else if (type === 'minAge' || type === 'maxAge') {
+    } else if (type === 'minAge') {
       if (text === 'ended') {
-        if (minAge === null || maxAge === null || !minAge.trim() || !maxAge.trim()) {
+        console.log('ended called')
+        if (minAge === null || !minAge.trim()) {
           this.setState({ ageError: 'Both fields required' })
         } else if (!minAge.match(/^[0-9]+$/)) {
+          this.setState({ ageError: 'Only numbers allowed' })
+        } else if (parseInt(maxAge, 10) < parseInt(minAge, 10)) {
+          this.setState({ ageError: 'Max is lower than min' })
+        } else {
+          this.setState({ ageError: null })
+        }
+      } else if (type === 'minAge') {
+        this.setState({ minAge: text }) 
+      } else if (type === 'maxAge') {
+        this.setState({ maxAge: text }) 
+      }
+    } else if (type === 'maxAge') {
+      if (text === 'ended') {
+        console.log('ended called')
+        if (maxAge === null || !maxAge.trim()) {
+          this.setState({ ageError: 'Both fields required' })
+        } else if (!maxAge.match(/^[0-9]+$/)) {
           this.setState({ ageError: 'Only numbers allowed' })
         } else if (parseInt(maxAge, 10) < parseInt(minAge, 10)) {
           this.setState({ ageError: 'Max is lower than min' })

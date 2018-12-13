@@ -72,7 +72,7 @@ class CustomSearchBar extends React.Component {
               query={{
                 location: '60.1695291,24.9383613',
                 radius: 500,
-                key: 'API KEY HERE',
+                key: 'AIzaSyBvVHjeYM1pIWZmw7fhQefoalEzCFOrGhg',
               }}
               GooglePlacesSearchQuery={{
                 rankby: 'distance',

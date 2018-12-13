@@ -22,11 +22,11 @@ class ListScreen extends React.Component {
     this.getOwnEvents()
   }
 
-  handleNavigation = (routeName, event) => {
+  handleNavigation = (routeName, event, from) => {
     const { navigation } = this.props
     const joined = this.checkDuplicate(event)
 
-    navigation.navigate(routeName, { storeOwnEvent: this.storeOwnEvent, event, joined })
+    navigation.navigate(routeName, { storeOwnEvent: this.storeOwnEvent, event, joined, handleNavigation: this.handleNavigation, from })
   }
 
   handleBarNavigation = () => {

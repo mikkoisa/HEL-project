@@ -14,9 +14,9 @@ class CreateScreen extends React.Component {
     this.getInitialLocation()
   }
 
-  handleNavigation = (routeName, event) => {
+  handleNavigation = (routeName, event, from) => {
     const { navigation } = this.props
-    navigation.navigate(routeName, event)
+    navigation.navigate(routeName, { event, from })
   }
 
   getInitialLocation = () => {

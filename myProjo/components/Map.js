@@ -11,6 +11,7 @@ class Map extends React.Component {
 
     this.state = {
       statusBarHeight: 1,
+      targetRegion: null,
     }
   }
 
@@ -21,6 +22,9 @@ class Map extends React.Component {
 
   render() {
     const { position, events, /* ownEvents, */ handleNavigation, refresh } = this.props
+    const { targetRegion } = this.state
+    
+    console.log(targetRegion)
 
     for (let i = 0; i < events.length; i += 1) {
       if (events[i].custom_data) {
@@ -35,7 +39,8 @@ class Map extends React.Component {
       <View style={[styles.container, { paddingTop: this.state.statusBarHeight }]}>
         <NavigationEvents
           onWillFocus={(payload) => {
-            if (payload.action.params) {
+            console.log(payload)
+            if (payload.action.params && payload.action.params.from === 'Create') {
               Alert.alert(
                 'Success',
                 'Event created succesfully!',
@@ -44,6 +49,10 @@ class Map extends React.Component {
                 ],
                 { cancelable: false },
               )
+            } else if (payload.action.params && payload.action.params.from === 'Event') {
+              this.setState({ 
+                targetRegion: payload.action.params.event,
+              })
             }
             refresh()
           }}
@@ -53,6 +62,22 @@ class Map extends React.Component {
           showsMyLocationButton
           style={styles.container}
           initialRegion={position.coords}
+          region={targetRegion ? {
+            latitude: parseFloat(targetRegion.lat, 10),
+            longitude: parseFloat(targetRegion.lng, 10),
+            latitudeDelta: 0.02,
+            longitudeDelta: 0.02, 
+          } : {
+            latitude: null,
+            longitude: null,
+            latitudeDelta: 0.02,
+            longitudeDelta: 0.02, 
+          }}
+           onRegionChangeComplete={() => {
+            targetRegion 
+              ? this.setState({ targetRegion: null })
+              : (console.log('already null'))
+          }}
         >
           {events.map(event => (
             // This will iterate trhrough the events and display them as markers
